@@ -3,7 +3,7 @@
  * Plugin Name: Patropi Add-ons
  * Plugin URI: https://patropi.com.br
  * Description: Plugin utilitário com funcionalidades extras para WordPress
- * Version: 0.1.2
+ * Version: 0.2.1-dev
  * Author: Rodrigo Bermudez
  * Author URI: https://patropicomunica.com.br
  * License: GPL v2 or later
@@ -16,12 +16,13 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-define( 'PATROPI_ADDON_VERSION', '0.1.2' );
+define( 'PATROPI_ADDON_VERSION', '0.2.0' );
 define( 'PATROPI_ADDON_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'PATROPI_ADDON_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
 require_once PATROPI_ADDON_PLUGIN_DIR . 'includes/class-patropi-settings.php';
 require_once PATROPI_ADDON_PLUGIN_DIR . 'includes/class-patropi-admin.php';
+require_once PATROPI_ADDON_PLUGIN_DIR . 'includes/class-patropi-mega-menu.php';
 
 function patropi_addon_process_form() {
     if ( is_admin() && isset( $_POST['patropi_faq_save'] ) && check_admin_referer( 'patropi_faq_settings' ) ) {

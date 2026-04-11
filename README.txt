@@ -3,23 +3,37 @@ Contributors: patropi
 Tags: patropi, addon, utilities
 Requires at least: 5.0
 Tested up to: 6.4
-Stable tag: 0.1.2
-License: GPL v2 or later
-License URI: https://www.gnu.org/licenses/gpl-2.0.html
-
-Plugin utilitário com funcionalidades extras para WordPress.
-
-== Description ==
-
-Patropi Add-ons oferece funcionalidades utilitárias para seu site WordPress.
-
-== Installation ==
-
-1. Upload the plugin files to the `/wp-content/plugins/patropi-addon` directory, or install the plugin through the WordPress plugins screen directly.
-2. Activate the plugin through the 'Plugins' screen in WordPress.
-3. Use the Patropi Add-ons menu to access the dashboard.
+Stable tag: 0.2.1
 
 == Changelog ==
+
+= 0.2.1-dev =
+* [Em desenvolvimento]
+* Novo módulo: Mega Menu
+  - Shortcode [patropi-mega-menu] para exibir o menu
+  - Interface gráfica no admin para criar o menu (builder)
+  - Menu principal com estilos customizáveis (cores, fundo, borda)
+  - Mega menu com configurações de largura e largura máxima
+  - Trigger: hover (ao passar mouse) ou click (ao clicar)
+  - Animação: FadeIn/FadeOut ou SlideIn/SlideOut
+  - Itens do menu: podem ter mega menu ou link simples
+  - Cada mega menu pode ter 1-6 colunas configuráveis
+  - Cada coluna: largura %, título opcional, layout (links ou imagem)
+  - Layout de links: adicionar páginas ou links customizados (máx 10)
+  - Layout de imagem: ícone, imagem, título, descrição e link
+
+= 0.2.0 =
+* Novo módulo: Mega Menu
+* Shortcode [patropi-mega-menu] para exibir o menu
+* Interface gráfica no admin para criar o menu (builder)
+* Menu principal com estilos customizáveis (cores, fundo, borda)
+* Mega menu com configurações de largura e largura máxima
+* Trigger: hover (ao passar mouse) ou click (ao clicar)
+* Itens do menu: podem ter mega menu ou link simples
+* Cada mega menu pode ter 1-6 colunas configuráveis
+* Cada coluna: largura %, título opcional, layout (links ou imagem)
+* Layout de links: adicionar páginas ou links customizados (máx 10)
+* Layout de imagem: ícone, imagem, título, descrição e link
 
 = 0.1.2 =
 * Sistema de ícones com rotação de 180º

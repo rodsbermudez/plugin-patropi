@@ -1,5 +1,35 @@
 .patropi-wrap {
     margin-top: 20px;
+    max-width: 100% !important;
+    width: 100% !important;
+}
+
+.wrap.patropi-wrap {
+    max-width: none !important;
+    width: 100% !important;
+    padding-right: 20px;
+}
+
+.patropi-menu-item,
+.patropi-menu-item.card,
+.patropi-menu-item .card,
+.patropi-menu-item .card-body,
+.patropi-column,
+.patropi-column.card,
+.patropi-column .card,
+.patropi-column .card-body {
+    max-width: 100% !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+#patropi-menu-items-container {
+    max-width: 100% !important;
+    width: 100% !important;
+}
+
+#patropi-menu-items-container > * {
+    max-width: 100% !important;
 }
 
 .patropi-header {
@@ -41,6 +71,7 @@
 
 .patropi-content {
     padding: 20px 0;
+    max-width: 100% !important;
 }
 
 .patropi-title {
@@ -56,6 +87,51 @@
     border-radius: 8px;
     padding: 20px;
     margin-bottom: 20px;
+    max-width: 100% !important;
+    width: 100% !important;
+}
+
+.patropi-card > * {
+    max-width: 100% !important;
+}
+
+.patropi-card .card {
+    max-width: 100% !important;
+    width: 100% !important;
+}
+
+.patropi-card .card-body {
+    max-width: 100% !important;
+}
+
+.patropi-menu-item {
+    max-width: 100% !important;
+    width: 100% !important;
+}
+
+.patropi-menu-item .card {
+    max-width: 100% !important;
+    width: 100% !important;
+}
+
+.patropi-menu-item .card-body {
+    max-width: 100% !important;
+    width: 100% !important;
+}
+
+.patropi-column {
+    max-width: 100% !important;
+    width: 100% !important;
+}
+
+.patropi-column .card {
+    max-width: 100% !important;
+    width: 100% !important;
+}
+
+.patropi-column .card-body {
+    max-width: 100% !important;
+    width: 100% !important;
 }
 
 .patropi-card-title {
