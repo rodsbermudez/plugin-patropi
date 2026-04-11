@@ -52,12 +52,14 @@
 /* Estado hover: quando o mouse passa sobre o botão */
 .patropi-faq-accordion .patropi-faq-question:hover {
     background: #e9ecef;
+    transition: background-color 0.2s ease;
 }
 
 /* Estado active: quando o item está aberto */
 .patropi-faq-accordion .patropi-faq-question.active {
     background: #2c3e50;
     color: #fff;
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 /* =========================================
@@ -75,10 +77,19 @@
    ========================================= */
 .patropi-faq-accordion .patropi-faq-icon {
     font-size: 20px;
-    font-weight: bold;
     width: 24px;
     text-align: center;
     flex-shrink: 0;
+    line-height: 1;
+}
+
+.patropi-faq-accordion .patropi-faq-icon.rotate {
+    transition: transform 0.3s ease;
+    transform: rotate(180deg);
+}
+
+.patropi-faq-accordion .patropi-faq-icon.rotate.open {
+    transform: rotate(0deg);
 }
 
 /* =========================================
@@ -86,14 +97,11 @@
    .patropi-faq-answer: Container da resposta (inicialmente oculto).
    ========================================= */
 .patropi-faq-accordion .patropi-faq-answer {
-    display: none;
+    height: 0;
+    overflow: hidden;
     background: #fff;
     border-top: 1px solid #e0e0e0;
-}
-
-/* Classe adicionada via JavaScript quando o item está aberto */
-.patropi-faq-accordion .patropi-faq-answer.open {
-    display: block;
+    transition: height 0.3s ease-out;
 }
 
 /* =========================================

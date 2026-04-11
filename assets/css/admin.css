@@ -182,3 +182,30 @@
     display: flex;
     gap: 10px;
 }
+
+.patropi-wrap .dashicons {
+    font-family: dashicons !important;
+    speak: never;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+}
+
+.patropi-wrap .icon-option input[type="radio"]:checked + .dashicons {
+    color: #2c3e50 !important;
+}
+
+.patropi-wrap .icon-option:hover {
+    border-color: #2c3e50 !important;
+}
+
+.patropi-wrap .icon-option input[type="radio"]:checked ~ .dashicons {
+    color: #2c3e50 !important;
+}
+
+.patropi-wrap .icon-option .dashicons:before {
+    font-family: dashicons !important;
+}

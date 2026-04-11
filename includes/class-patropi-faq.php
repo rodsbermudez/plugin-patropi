@@ -161,10 +161,12 @@ class Patropi_Addon_FAQ {
             return;
         }
 
+        wp_enqueue_style( 'dashicons' );
+        
         wp_enqueue_style(
             'patropi-faq',
             PATROPI_ADDON_PLUGIN_URL . 'assets/css/faq.css',
-            array(),
+            array( 'dashicons' ),
             PATROPI_ADDON_VERSION
         );
 
@@ -179,7 +181,10 @@ class Patropi_Addon_FAQ {
         $settings = new Patropi_Addon_Settings();
         wp_localize_script( 'patropi-faq', 'patropiFaqSettings', array(
             'openFirst' => $settings->is_faq_open_first(),
-            'closeOthers' => $settings->is_faq_close_others()
+            'closeOthers' => $settings->is_faq_close_others(),
+            'iconRotation' => (bool) $settings->get_setting( 'faq_icon_rotation', true ),
+            'iconClosed' => $settings->get_setting( 'faq_icon_closed', 'dashicons-arrow-down' ),
+            'iconOpen' => $settings->get_setting( 'faq_icon_open', 'dashicons-arrow-up' )
         ) );
     }
 
@@ -224,7 +229,7 @@ class Patropi_Addon_FAQ {
                 <div class="patropi-faq-item">
                     <div class="patropi-faq-question" data-index="<?php echo esc_attr( $index ); ?>">
                         <span class="patropi-faq-question-text"><?php echo esc_html( $faq->post_title ); ?></span>
-                        <span class="patropi-faq-icon">+</span>
+                        <span class="patropi-faq-icon dashicons dashicons-arrow-down"></span>
                     </div>
                     <div class="patropi-faq-answer">
                         <div class="patropi-faq-answer-content">

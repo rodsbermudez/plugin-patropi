@@ -9,8 +9,24 @@ class Patropi_Addon_Settings {
         'faq_enabled' => false,
         'faq_open_first' => false,
         'faq_close_others' => true,
+        'faq_icon_rotation' => true,
+        'faq_icon_closed' => 'dashicons-arrow-up-alt2',
+        'faq_icon_open' => 'dashicons-arrow-down-alt2',
         'faq_custom_css' => ''
     );
+
+    public function get_icon_options() {
+        return array(
+            'dashicons-insert' => array( 'label' => 'Insert', 'closed' => 'dashicons-insert', 'open' => 'dashicons-insert' ),
+            'dashicons-remove' => array( 'label' => 'Remove', 'closed' => 'dashicons-remove', 'open' => 'dashicons-remove' ),
+            'dashicons-arrow-up' => array( 'label' => 'Arrow Up', 'closed' => 'dashicons-arrow-up', 'open' => 'dashicons-arrow-up' ),
+            'dashicons-arrow-down' => array( 'label' => 'Arrow Down', 'closed' => 'dashicons-arrow-down', 'open' => 'dashicons-arrow-down' ),
+            'dashicons-arrow-up-alt2' => array( 'label' => 'Arrow Up (Alt2)', 'closed' => 'dashicons-arrow-up-alt2', 'open' => 'dashicons-arrow-up-alt2' ),
+            'dashicons-arrow-down-alt2' => array( 'label' => 'Arrow Down (Alt2)', 'closed' => 'dashicons-arrow-down-alt2', 'open' => 'dashicons-arrow-down-alt2' ),
+            'dashicons-plus-alt2' => array( 'label' => 'Plus (Alt2)', 'closed' => 'dashicons-plus-alt2', 'open' => 'dashicons-plus-alt2' ),
+            'dashicons-minus' => array( 'label' => 'Minus', 'closed' => 'dashicons-minus', 'open' => 'dashicons-minus' ),
+        );
+    }
 
     public function get_settings() {
         $settings = get_option( $this->option_name, array() );
@@ -52,6 +68,28 @@ class Patropi_Addon_Settings {
         if ( array_key_exists( 'faq_close_others', $new_settings ) ) {
             $current['faq_close_others'] = (bool) $new_settings['faq_close_others'];
         }
+        
+        // Handle icon rotation
+        if ( array_key_exists( 'faq_icon_rotation', $new_settings ) ) {
+            $rotation_enabled = ! empty( $new_settings['faq_icon_rotation'] );
+            $current['faq_icon_rotation'] = $rotation_enabled;
+        }
+        
+        // Always save icon_closed if provided
+        if ( isset( $new_settings['faq_icon_closed'] ) && $new_settings['faq_icon_closed'] !== '' ) {
+            $current['faq_icon_closed'] = sanitize_text_field( $new_settings['faq_icon_closed'] );
+        }
+        
+        // Always save icon_open if provided  
+        if ( isset( $new_settings['faq_icon_open'] ) && $new_settings['faq_icon_open'] !== '' ) {
+            $current['faq_icon_open'] = sanitize_text_field( $new_settings['faq_icon_open'] );
+        }
+        
+        // If rotation is enabled, set icon_open to match icon_closed
+        if ( ! empty( $current['faq_icon_rotation'] ) && isset( $current['faq_icon_closed'] ) ) {
+            $current['faq_icon_open'] = $current['faq_icon_closed'];
+        }
+        
         if ( array_key_exists( 'faq_custom_css', $new_settings ) ) {
             $current['faq_custom_css'] = $new_settings['faq_custom_css'];
         }

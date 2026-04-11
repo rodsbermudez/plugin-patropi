@@ -17,6 +17,8 @@ class Patropi_Addon_Admin {
             return;
         }
 
+        wp_enqueue_style( 'dashicons' );
+
         wp_enqueue_style(
             'patropi-bootstrap',
             'https://cdn.jsdelivr.net/npm/bootswatch@5.3.2/dist/flatly/bootstrap.min.css',
@@ -27,7 +29,7 @@ class Patropi_Addon_Admin {
         wp_enqueue_style(
             'patropi-admin',
             PATROPI_ADDON_PLUGIN_URL . 'assets/css/admin.css',
-            array( 'patropi-bootstrap' ),
+            array( 'patropi-bootstrap', 'dashicons' ),
             $this->version
         );
     }
@@ -59,23 +61,23 @@ class Patropi_Addon_Admin {
             __( 'Patropi Add-ons', 'patropi-addon' ),
             __( 'Patropi Add-ons', 'patropi-addon' ),
             'manage_options',
-            'patropi-addon',
+            'patropi-dashboard',
             array( $this, 'render_dashboard' ),
             PATROPI_ADDON_PLUGIN_URL . 'assets/images/patropi-favicon.png',
             3
         );
 
         add_submenu_page(
-            'patropi-addon',
+            'patropi-dashboard',
             __( 'Dashboard', 'patropi-addon' ),
             __( 'Dashboard', 'patropi-addon' ),
             'manage_options',
-            'patropi-addon',
+            'patropi-dashboard',
             array( $this, 'render_dashboard' )
         );
 
         add_submenu_page(
-            'patropi-addon',
+            'patropi-dashboard',
             __( 'FAQ', 'patropi-addon' ),
             __( 'FAQ', 'patropi-addon' ),
             'manage_options',
@@ -84,15 +86,13 @@ class Patropi_Addon_Admin {
         );
 
         add_submenu_page(
-            'patropi-addon',
+            'patropi-dashboard',
             __( 'Atualizações', 'patropi-addon' ),
             __( 'Atualizações', 'patropi-addon' ),
             'manage_options',
             'patropi-atualizacoes',
             array( $this, 'render_atualizacoes' )
         );
-
-        remove_submenu_page( 'patropi-addon', 'patropi-addon' );
     }
 
     public function render_layout_start() {
@@ -107,7 +107,7 @@ class Patropi_Addon_Admin {
             <?php if ( $active_tab ) : ?>
             <ul class="nav nav-tabs patropi-tabs">
                 <li class="nav-item">
-                    <a class="nav-link <?php echo $active_tab === 'dashboard' ? 'active' : ''; ?>" href="<?php echo admin_url( 'admin.php?page=patropi-addon' ); ?>">
+                    <a class="nav-link <?php echo $active_tab === 'dashboard' ? 'active' : ''; ?>" href="<?php echo admin_url( 'admin.php?page=patropi-dashboard' ); ?>">
                         <?php _e( 'Dashboard', 'patropi-addon' ); ?>
                     </a>
                 </li>
@@ -175,7 +175,10 @@ class Patropi_Addon_Admin {
             $new_settings = array(
                 'faq_enabled' => ! empty( $_POST['faq_enabled'] ) ? 1 : 0,
                 'faq_open_first' => ! empty( $_POST['faq_open_first'] ) ? 1 : 0,
-                'faq_close_others' => ! empty( $_POST['faq_close_others'] ) ? 1 : 0
+                'faq_close_others' => ! empty( $_POST['faq_close_others'] ) ? 1 : 0,
+                'faq_icon_rotation' => ! empty( $_POST['faq_icon_rotation'] ) ? 1 : 0,
+                'faq_icon_closed' => isset( $_POST['faq_icon_closed'] ) ? $_POST['faq_icon_closed'] : 'dashicons-arrow-down',
+                'faq_icon_open' => isset( $_POST['faq_icon_open'] ) ? $_POST['faq_icon_open'] : 'dashicons-arrow-up'
             );
             $settings->update_settings( $new_settings );
             
@@ -188,21 +191,6 @@ class Patropi_Addon_Admin {
 
         $this->render_layout_start();
         $this->render_header( 'faq' );
-        
-        if ( isset( $_POST['patropi_faq_save'] ) && check_admin_referer( 'patropi_faq_settings' ) ) {
-            $new_settings = array(
-                'faq_enabled' => ! empty( $_POST['faq_enabled'] ) ? 1 : 0,
-                'faq_open_first' => ! empty( $_POST['faq_open_first'] ) ? 1 : 0,
-                'faq_close_others' => ! empty( $_POST['faq_close_others'] ) ? 1 : 0
-            );
-            $settings->update_settings( $new_settings );
-            
-            if ( $new_settings['faq_enabled'] ) {
-                update_option( 'patropi_addon_flush_needed', true );
-            }
-            
-            echo '<div class="notice notice-success is-dismissible"><p>Configurações salvas com sucesso!</p></div>';
-        }
         
         if ( isset( $_POST['patropi_faq_css_save'] ) && check_admin_referer( 'patropi_faq_css_save', 'patropi_faq_css_nonce' ) ) {
             $css_value = isset( $_POST['faq_custom_css'] ) ? $_POST['faq_custom_css'] : '';
@@ -256,6 +244,60 @@ class Patropi_Addon_Admin {
                         <span class="patropi-toggle-switch"></span>
                         <span class="patropi-toggle-label"><?php _e( 'Fechar outros ao abrir um', 'patropi-addon' ); ?></span>
                     </label>
+                    
+                    <hr style="margin: 20px 0;">
+                    
+                    <label class="patropi-toggle">
+                        <input type="checkbox" name="faq_icon_rotation" value="1" <?php checked( $current_settings['faq_icon_rotation'], true ); ?>>
+                        <span class="patropi-toggle-switch"></span>
+                        <span class="patropi-toggle-label"><?php _e( 'Ativar rotação de 180º', 'patropi-addon' ); ?></span>
+                    </label>
+                    <p class="patropi-card-text" style="margin-top: 5px; font-size: 12px;"><?php _e( 'Se ativado, usa um ícone que gira ao abrir/fechar. Se desativado, permite escolher dois ícones diferentes.', 'patropi-addon' ); ?></p>
+                    
+                    <?php 
+                    $icon_options = $settings->get_icon_options();
+                    $rotation_enabled = ! empty( $current_settings['faq_icon_rotation'] );
+                    ?>
+                    
+                    <div class="icon-section-single" style="margin-top: 15px; <?php echo $rotation_enabled ? '' : 'display: none;'; ?>">
+                        <label style="display: block; margin-bottom: 5px; font-weight: 500;"><?php _e( 'Selecionar ícone:', 'patropi-addon' ); ?></label>
+                        <div class="icon-select-container" style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <?php foreach ( $icon_options as $key => $option ) : ?>
+                                <label class="icon-option" style="cursor: pointer; padding: 8px; border: 2px solid #ddd; border-radius: 4px; display: flex; align-items: center; gap: 5px; <?php echo ( $current_settings['faq_icon_closed'] === $key ) ? 'border-color: #2c3e50; background: #f8f9fa;' : ''; ?>">
+                                    <input type="radio" name="faq_icon_closed" value="<?php echo esc_attr( $key ); ?>" <?php checked( $current_settings['faq_icon_closed'], $key ); ?> style="display: none;">
+                                    <span class="dashicons <?php echo esc_attr( $option['closed'] ); ?>" style="color: #555;"></span>
+                                    <span style="font-size: 12px;"><?php echo esc_html( $option['label'] ); ?></span>
+                                </label>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                    
+                    <div class="icon-section-dual" style="margin-top: 15px; <?php echo $rotation_enabled ? 'display: none;' : ''; ?>">
+                        <div style="margin-bottom: 10px;">
+                            <label style="display: block; margin-bottom: 5px; font-weight: 500;"><?php _e( 'Ícone fechado:', 'patropi-addon' ); ?></label>
+                            <div class="icon-select-container" style="display: flex; gap: 10px; flex-wrap: wrap;">
+                                <?php foreach ( $icon_options as $key => $option ) : ?>
+                                    <label class="icon-option" style="cursor: pointer; padding: 8px; border: 2px solid #ddd; border-radius: 4px; display: flex; align-items: center; gap: 5px; <?php echo ( $current_settings['faq_icon_closed'] === $option['closed'] ) ? 'border-color: #2c3e50; background: #f8f9fa;' : ''; ?>">
+                                        <input type="radio" name="faq_icon_closed" value="<?php echo esc_attr( $option['closed'] ); ?>" <?php checked( $current_settings['faq_icon_closed'], $option['closed'] ); ?> style="display: none;">
+                                        <span class="dashicons <?php echo esc_attr( $option['closed'] ); ?>" style="color: #555;"></span>
+                                        <span style="font-size: 12px;"><?php echo esc_html( $option['label'] ); ?></span>
+                                    </label>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                        <div>
+                            <label style="display: block; margin-bottom: 5px; font-weight: 500;"><?php _e( 'Ícone aberto:', 'patropi-addon' ); ?></label>
+                            <div class="icon-select-container" style="display: flex; gap: 10px; flex-wrap: wrap;">
+                                <?php foreach ( $icon_options as $key => $option ) : ?>
+                                    <label class="icon-option" style="cursor: pointer; padding: 8px; border: 2px solid #ddd; border-radius: 4px; display: flex; align-items: center; gap: 5px; <?php echo ( $current_settings['faq_icon_open'] === $option['open'] ) ? 'border-color: #2c3e50; background: #f8f9fa;' : ''; ?>">
+                                        <input type="radio" name="faq_icon_open" value="<?php echo esc_attr( $option['open'] ); ?>" <?php checked( $current_settings['faq_icon_open'], $option['open'] ); ?> style="display: none;">
+                                        <span class="dashicons <?php echo esc_attr( $option['open'] ); ?>" style="color: #555;"></span>
+                                        <span style="font-size: 12px;"><?php echo esc_html( $option['label'] ); ?></span>
+                                    </label>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <p class="patropi-submit">
@@ -282,6 +324,15 @@ class Patropi_Addon_Admin {
 
     public function render_atualizacoes() {
         $changelog = array(
+            '0.1.2' => array(
+                'Sistema de ícones com rotação de 180º',
+                'Toggle para ativar/desativar rotação',
+                'Se rotação ativada: usa um ícone que gira',
+                'Se rotação desativada: permite selecionar dois ícones diferentes (aberto/fechado)',
+                'Ajuste visual no admin: seções de ícones aparecem/escondem em tempo real ao toggle',
+                'Correção de bug: ícones não alternavam corretamente quando rotação estava desligada',
+                'Lista de ícones disponíveis: Insert, Remove, Arrow Up, Arrow Down, Arrow Up (Alt2), Arrow Down (Alt2), Plus (Alt2), Minus'
+            ),
             '0.1.1' => array(
                 'Criação do plugin Patropi Add-ons',
                 'Criação do módulo FAQ com:',
