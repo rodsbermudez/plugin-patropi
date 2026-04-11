@@ -1,0 +1,116 @@
+/* =========================================
+   PATROPI FAQ ACCORDION - TEMA PADRÃO
+   =========================================
+   
+   Este é o CSS padrão do módulo FAQ. O conteúdo deste arquivo serve como
+   base para personalização. Você pode editar este CSS na página de 
+   configurações do plugin.
+   
+   Para reverter para o padrão, clique em "Resetar para Padrão".
+   
+   OBS: Todos os estilos são scoped com o prefixo .patropi-faq-accordion
+   para evitar conflitos com outros elementos da página.
+*/
+
+/* =========================================
+   CONTAINER PRINCIPAL
+   .patropi-faq-accordion: Container principal que envolve todos os itens do FAQ.
+   ========================================= */
+.patropi-faq-accordion {
+    margin: 20px 0;
+}
+
+/* =========================================
+   ITEM INDIVIDUAL
+   .patropi-faq-item: Cada pergunta/resposta é um item separado.
+   ========================================= */
+.patropi-faq-accordion .patropi-faq-item {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+/* =========================================
+   BOTÃO DA PERGUNTA (TÍTULO)
+   .patropi-faq-question: O botão clicável que mostra a pergunta.
+   ========================================= */
+.patropi-faq-accordion .patropi-faq-question {
+    width: 100%;
+    padding: 15px 20px;
+    background: #f8f9fa;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+}
+
+/* Estado hover: quando o mouse passa sobre o botão */
+.patropi-faq-accordion .patropi-faq-question:hover {
+    background: #e9ecef;
+}
+
+/* Estado active: quando o item está aberto */
+.patropi-faq-accordion .patropi-faq-question.active {
+    background: #2c3e50;
+    color: #fff;
+}
+
+/* =========================================
+   TEXTO DA PERGUNTA
+   .patropi-faq-question-text: O texto da pergunta em si.
+   ========================================= */
+.patropi-faq-accordion .patropi-faq-question-text {
+    flex: 1;
+    padding-right: 15px;
+}
+
+/* =========================================
+   ÍCONE (+ / -)
+   .patropi-faq-icon: O símbolo de + ou - que indica estado.
+   ========================================= */
+.patropi-faq-accordion .patropi-faq-icon {
+    font-size: 20px;
+    font-weight: bold;
+    width: 24px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+/* =========================================
+   RESPOSTA (CONTEÚDO)
+   .patropi-faq-answer: Container da resposta (inicialmente oculto).
+   ========================================= */
+.patropi-faq-accordion .patropi-faq-answer {
+    display: none;
+    background: #fff;
+    border-top: 1px solid #e0e0e0;
+}
+
+/* Classe adicionada via JavaScript quando o item está aberto */
+.patropi-faq-accordion .patropi-faq-answer.open {
+    display: block;
+}
+
+/* =========================================
+   CONTEÚDO DA RESPOSTA
+   .patropi-faq-answer-content: Wrapper interno para o conteúdo da resposta.
+   ========================================= */
+.patropi-faq-accordion .patropi-faq-answer-content {
+    padding: 20px;
+    line-height: 1.6;
+}
+
+/* Parágrafos dentro da resposta */
+.patropi-faq-accordion .patropi-faq-answer-content p {
+    margin: 0 0 10px;
+}
+
+/* Último parágrafo sem margem inferior */
+.patropi-faq-accordion .patropi-faq-answer-content p:last-child {
+    margin-bottom: 0;
+}
