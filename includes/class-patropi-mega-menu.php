@@ -245,6 +245,11 @@ class Patropi_Mega_Menu {
         } else {
             $border_hover = ! empty( $main_menu['border_hover_color'] ) ? $main_menu['border_hover_color'] : '#2c3e50';
         }
+        
+        $item_align = $main_menu['align'] ?? 'flex-start';
+        $item_gap = $main_menu['item_gap'] ?? '0px';
+        $item_padding_y = $main_menu['item_padding_y'] ?? '15px';
+        $item_padding_x = $main_menu['item_padding_x'] ?? '20px';
 
         $mega_menu = $settings['mega_menu'] ?? array();
         $padding_y = $mega_menu['padding_y'] ?? '20px';
@@ -285,6 +290,10 @@ class Patropi_Mega_Menu {
                 --mm-mobile-icon-color: <?php echo esc_attr( $mobile_icon_color ); ?>;
                 --mm-mobile-bg-color: <?php echo esc_attr( $mobile_bg_color ); ?>;
                 --mm-mobile-width: <?php echo esc_attr( $mobile_width ); ?>%;
+                --mm-item-align: <?php echo esc_attr( $item_align ); ?>;
+                --mm-item-gap: <?php echo esc_attr( $item_gap ); ?>;
+                --mm-item-padding-y: <?php echo esc_attr( $item_padding_y ); ?>;
+                --mm-item-padding-x: <?php echo esc_attr( $item_padding_x ); ?>;
             }
         </style>
         <div class="patropi-mega-menu-wrapper">

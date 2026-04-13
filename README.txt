@@ -3,9 +3,15 @@ Contributors: patropi
 Tags: patropi, addon, utilities
 Requires at least: 5.0
 Tested up to: 6.4
-Stable tag: 0.2.4
+Stable tag: 0.2.5
 
 == Changelog ==
+
+= 0.2.5 =
+* Mega Menu: Card "Layout do Menu Principal" no admin
+* Mega Menu: Alinhamento dos itens (esquerda/centro/direita)
+* Mega Menu: Gap configurável entre os itens
+* Mega Menu: Padding configurável dos itens (top/bottom e left/right)
 
 = 0.2.4 =
 * Mega Menu: Card separado para configurações mobile/tablet

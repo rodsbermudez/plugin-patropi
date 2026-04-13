@@ -55,7 +55,8 @@
     display: flex !important;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: var(--mm-item-align, flex-start);
+    gap: var(--mm-item-gap, 0px);
     width: 100% !important;
     max-width: var(--mm-max-width, 1200px) !important;
     margin: 0 auto !important;
@@ -69,7 +70,7 @@
 
 .patropi-mega-menu-link {
     display: block;
-    padding: 15px 20px;
+    padding: var(--mm-item-padding-y, 15px) var(--mm-item-padding-x, 20px);
     text-decoration: none;
     font-weight: 500;
     transition: all 0.2s ease;

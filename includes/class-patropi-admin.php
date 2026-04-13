@@ -574,6 +574,32 @@ class Patropi_Addon_Admin {
                 </div>
 
                 <div class="patropi-card">
+                    <h3 class="patropi-card-title"><?php _e( 'Layout do Menu Principal', 'patropi-addon' ); ?></h3>
+                    <div class="row">
+                        <div class="col-6 col-md-3">
+                            <label><strong><?php _e( 'Alinhamento', 'patropi-addon' ); ?></strong></label>
+                            <select name="main_menu[align]" class="form-control">
+                                <option value="flex-start" <?php selected( $settings['main_menu']['align'] ?? 'flex-start', 'flex-start' ); ?>><?php _e( 'Esquerda', 'patropi-addon' ); ?></option>
+                                <option value="center" <?php selected( $settings['main_menu']['align'] ?? 'flex-start', 'center' ); ?>><?php _e( 'Centro', 'patropi-addon' ); ?></option>
+                                <option value="flex-end" <?php selected( $settings['main_menu']['align'] ?? 'flex-start', 'flex-end' ); ?>><?php _e( 'Direita', 'patropi-addon' ); ?></option>
+                            </select>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <label><strong><?php _e( 'Gap entre itens', 'patropi-addon' ); ?></strong></label>
+                            <input type="text" name="main_menu[item_gap]" value="<?php echo esc_attr( $settings['main_menu']['item_gap'] ?? '0px' ); ?>" class="form-control" placeholder="ex: 10px">
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <label><strong><?php _e( 'Padding (top/bottom)', 'patropi-addon' ); ?></strong></label>
+                            <input type="text" name="main_menu[item_padding_y]" value="<?php echo esc_attr( $settings['main_menu']['item_padding_y'] ?? '15px' ); ?>" class="form-control" placeholder="ex: 15px">
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <label><strong><?php _e( 'Padding (left/right)', 'patropi-addon' ); ?></strong></label>
+                            <input type="text" name="main_menu[item_padding_x]" value="<?php echo esc_attr( $settings['main_menu']['item_padding_x'] ?? '20px' ); ?>" class="form-control" placeholder="ex: 20px">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="patropi-card">
                     <h3 class="patropi-card-title"><?php _e( 'Configurações do Mega Menu', 'patropi-addon' ); ?></h3>
                     <div class="row">
                         <div class="col-6 col-md-3">
