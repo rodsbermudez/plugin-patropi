@@ -631,6 +631,25 @@ class Patropi_Addon_Admin {
                 </div>
 
                 <div class="patropi-card">
+                    <h3 class="patropi-card-title"><?php _e( 'Configurações Mobile/Tablet', 'patropi-addon' ); ?></h3>
+                    <div class="row">
+                        <div class="col-6 col-md-3">
+                            <label><strong><?php _e( 'Cor do ícone', 'patropi-addon' ); ?></strong></label>
+                            <input type="color" name="mega_menu[mobile_icon_color]" value="<?php echo esc_attr( $settings['mega_menu']['mobile_icon_color'] ?? '#333333' ); ?>" class="form-control form-control-color" style="width: 50px; height: 40px; padding: 2px;">
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <label><strong><?php _e( 'Cor de fundo', 'patropi-addon' ); ?></strong></label>
+                            <input type="color" name="mega_menu[mobile_bg_color]" value="<?php echo esc_attr( $settings['mega_menu']['mobile_bg_color'] ?? '#ffffff' ); ?>" class="form-control form-control-color" style="width: 50px; height: 40px; padding: 2px;">
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <label><strong><?php _e( 'Largura (%)', 'patropi-addon' ); ?></strong></label>
+                            <input type="number" name="mega_menu[mobile_width]" value="<?php echo esc_attr( $settings['mega_menu']['mobile_width'] ?? '85' ); ?>" class="form-control" min="50" max="100" placeholder="50-100">
+                            <small class="text-muted" style="font-size: 11px;"><?php _e( 'Valor entre 50% e 100%', 'patropi-addon' ); ?></small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="patropi-card">
                     <h3 class="patropi-card-title"><?php _e( 'Itens do Menu', 'patropi-addon' ); ?></h3>
                     <p class="patropi-card-text"><?php _e( 'Adicione os itens do menu principal. Para cada item, você pode definir se terá mega menu ou apenas um link simples.', 'patropi-addon' ); ?></p>
                     

@@ -258,6 +258,12 @@ class Patropi_Mega_Menu {
         } else {
             $dropdown_bg = ! empty( $mega_menu['dropdown_bg'] ) ? $mega_menu['dropdown_bg'] : '#ffffff';
         }
+        
+        $mobile_icon_color = $mega_menu['mobile_icon_color'] ?? '#333333';
+        $mobile_bg_color = $mega_menu['mobile_bg_color'] ?? '#ffffff';
+        $mobile_width = ! empty( $mega_menu['mobile_width'] ) ? intval( $mega_menu['mobile_width'] ) : 85;
+        if ( $mobile_width < 50 ) $mobile_width = 50;
+        if ( $mobile_width > 100 ) $mobile_width = 100;
 
         ob_start();
         ?>
@@ -276,6 +282,9 @@ class Patropi_Mega_Menu {
                 --mm-width: <?php echo esc_attr( $menu_width ); ?>;
                 --mm-max-width: <?php echo esc_attr( $menu_max_width ); ?>;
                 --mm-dropdown-bg: <?php echo esc_attr( $dropdown_bg ); ?>;
+                --mm-mobile-icon-color: <?php echo esc_attr( $mobile_icon_color ); ?>;
+                --mm-mobile-bg-color: <?php echo esc_attr( $mobile_bg_color ); ?>;
+                --mm-mobile-width: <?php echo esc_attr( $mobile_width ); ?>%;
             }
         </style>
         <div class="patropi-mega-menu-wrapper">
@@ -377,7 +386,7 @@ class Patropi_Mega_Menu {
             <div class="patropi-mega-menu-mobile-overlay"></div>
             <div class="patropi-mega-menu-mobile">
                 <div class="patropi-mega-menu-mobile-header">
-                    <span class="patropi-mega-menu-mobile-title">Menu</span>
+                    <span class="patropi-mega-menu-mobile-title"></span>
                     <button type="button" class="patropi-mega-menu-mobile-close" aria-label="Fechar menu">
                         <span class="dashicons dashicons-no-alt"></span>
                     </button>
@@ -403,7 +412,7 @@ class Patropi_Mega_Menu {
                             <?php if ( ! empty( $item['has_mega'] ) ) : ?>
                                 <div class="patropi-mega-menu-mobile-item-header">
                                     <span class="patropi-mega-menu-mobile-link"><?php echo esc_html( $item['text'] ); ?></span>
-                                    <span class="dashicons dashicons-arrow-down patropi-mega-menu-mobile-arrow"></span>
+                                    <span class="dashicons dashicons-arrow-down-alt2 patropi-mega-menu-mobile-arrow"></span>
                                 </div>
                                 <div class="patropi-mega-menu-mobile-submenu">
                                     <div class="patropi-mega-menu-mobile-submenu-inner">

@@ -3,9 +3,17 @@ Contributors: patropi
 Tags: patropi, addon, utilities
 Requires at least: 5.0
 Tested up to: 6.4
-Stable tag: 0.2.3
+Stable tag: 0.2.4
 
 == Changelog ==
+
+= 0.2.4 =
+* Mega Menu: Card separado para configurações mobile/tablet
+* Mega Menu: Cor do ícone configurável (mobile)
+* Mega Menu: Cor de fundo configurável (mobile)
+* Mega Menu: Largura do menu mobile configurável (50-100%)
+* Mega Menu: Ícone arrow-down-alt2 para submenus mobile
+* Mega Menu: Alinhamento do botão X com ícones de submenu
 
 = 0.2.3 =
 * Mega Menu: Menu mobile/tablet com breakpoint em 1024px
