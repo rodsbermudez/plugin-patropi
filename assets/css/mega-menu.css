@@ -212,30 +212,190 @@
     display: block;
 }
 
+/* Mobile Toggle Button */
+.patropi-mega-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    color: var(--mm-text-color);
+}
+
+.patropi-mega-menu-toggle .dashicons {
+    font-size: 30px;
+    width: 30px;
+    height: 30px;
+}
+
+/* Mobile Overlay */
+.patropi-mega-menu-mobile-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9998;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.patropi-mega-menu-mobile-overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+/* Mobile Menu */
+.patropi-mega-menu-mobile {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 85%;
+    max-width: 350px;
+    height: 100%;
+    background: #fff;
+    z-index: 9999;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    overflow-x: hidden;
+    box-sizing: border-box;
+}
+
+.patropi-mega-menu-mobile * {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.patropi-mega-menu-mobile.active {
+    transform: translateX(0);
+}
+
+.patropi-mega-menu-mobile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
+    background: var(--mm-bg-color);
+}
+
+.patropi-mega-menu-mobile-title {
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--mm-text-color);
+}
+
+.patropi-mega-menu-mobile-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    color: var(--mm-text-color);
+}
+
+.patropi-mega-menu-mobile-close .dashicons {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+}
+
+.patropi-mega-menu-mobile-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.patropi-mega-menu-mobile-item {
+    border-bottom: 1px solid #eee;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+.patropi-mega-menu-mobile-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    cursor: pointer;
+    color: var(--mm-text-color);
+}
+
+.patropi-mega-menu-mobile-item-header:hover {
+    background: var(--mm-bg-hover);
+}
+
+.patropi-mega-menu-mobile-link {
+    text-decoration: none;
+    color: var(--mm-text-color);
+    display: block;
+    padding: 15px 20px;
+}
+
+.patropi-mega-menu-mobile-link:hover {
+    background: var(--mm-bg-hover);
+    color: var(--mm-text-color-hover);
+}
+
+.patropi-mega-menu-mobile-arrow {
+    transition: transform 0.3s ease;
+    color: var(--mm-text-color);
+}
+
+.patropi-mega-menu-mobile-item.active .patropi-mega-menu-mobile-arrow {
+    transform: rotate(180deg);
+}
+
+.patropi-mega-menu-mobile-submenu {
+    max-height: 0;
+    overflow: hidden;
+    background: #f9f9f9;
+    transition: max-height 0.3s ease;
+}
+
+.patropi-mega-menu-mobile-item.active .patropi-mega-menu-mobile-submenu {
+    max-height: 2000px;
+}
+
+.patropi-mega-menu-mobile-submenu-inner {
+    padding: 15px 20px;
+}
+
+.patropi-mega-menu-mobile-col {
+    margin-bottom: 20px;
+}
+
+.patropi-mega-menu-mobile-col:last-child {
+    margin-bottom: 0;
+}
+
 /* Mobile Responsive */
-@media (max-width: 768px) {
-    .patropi-mega-menu-list {
-        flex-direction: column;
+@media (max-width: 1024px) {
+    .patropi-mega-menu-toggle {
+        display: block;
     }
     
-    .patropi-mega-menu-item {
-        width: 100%;
+    .patropi-mega-menu-main {
+        display: none;
     }
     
-    .patropi-mega-menu-dropdown {
-        position: static;
-        width: 100% !important;
-        max-width: 100% !important;
-        box-shadow: none;
-        border: none;
+    .patropi-mega-menu-mobile {
+        display: block;
     }
-    
-    .patropi-mega-menu-columns {
-        flex-direction: column;
-    }
-    
-    .patropi-mega-menu-col {
-        width: 100% !important;
-        margin-bottom: 15px;
+}
+
+@media (min-width: 1025px) {
+    .patropi-mega-menu-toggle,
+    .patropi-mega-menu-mobile,
+    .patropi-mega-menu-mobile-overlay {
+        display: none !important;
     }
 }

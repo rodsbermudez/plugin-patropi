@@ -157,13 +157,98 @@
                 '<div class="patropi-mega-config" style="display: none;">' +
                 '<hr><h5>Configurações do Mega Menu</h5>' +
                 '<div class="mb-3">' +
-                '<label><strong>Número de colunas</strong></label>' +
-                '<select name="menu_items[' + count + '][num_columns]" class="form-control patropi-num-columns">' +
-                '<option value="1">1</option><option value="2">2</option><option value="3">3</option>' +
-                '<option value="4">4</option><option value="5">5</option><option value="6">6</option>' +
+                '<button type="button" class="btn btn-primary btn-sm patropi-add-column" data-item-index="' + count + '">+ Adicionar coluna</button>' +
+                '</div>' +
+                '<div class="patropi-columns-container">' +
+                '<div class="patropi-column card mb-2" data-col-index="0">' +
+                '<div class="card-header d-flex justify-content-between align-items-center">' +
+                '<span>Coluna 1</span>' +
+                '<button type="button" class="btn btn-danger btn-sm patropi-remove-column">Remover</button>' +
+                '</div>' +
+                '<div class="card-body">' +
+                '<div class="row">' +
+                '<div class="col-4 col-md-4">' +
+                '<label><strong>Largura (%)</strong></label>' +
+                '<input type="number" name="menu_items[' + count + '][columns][0][width]" value="25" class="form-control" min="1" max="100">' +
+                '</div>' +
+                '<div class="col-4 col-md-4">' +
+                '<label><strong>Tem título?</strong></label>' +
+                '<label class="patropi-toggle" style="margin-top: 5px;">' +
+                '<input type="checkbox" name="menu_items[' + count + '][columns][0][has_title]" value="1" class="patropi-has-title-toggle">' +
+                '<span class="patropi-toggle-switch"></span>' +
+                '<span class="patropi-toggle-label">Mostrar</span>' +
+                '</label>' +
+                '</div>' +
+                '<div class="col-4 col-md-4">' +
+                '<label><strong>Layout</strong></label>' +
+                '<select name="menu_items[' + count + '][columns][0][layout]" class="form-control patropi-col-layout">' +
+                '<option value="links">Links</option>' +
+                '<option value="image">Imagem</option>' +
                 '</select>' +
                 '</div>' +
-                '<div class="patropi-columns-container"></div>' +
+                '</div>' +
+                '<div class="patropi-title-config mt-2" style="display: none;">' +
+                '<label><strong>Título da coluna</strong></label>' +
+                '<input type="text" name="menu_items[' + count + '][columns][0][title]" value="" class="form-control">' +
+                '</div>' +
+                '<div class="patropi-links-config mt-3">' +
+                '<label><strong>Adicionar links</strong></label>' +
+                '<p class="text-muted" style="font-size: 12px;">Máximo 10 links por coluna.</p>' +
+                '<div class="patropi-links-list">' +
+                '<div class="patropi-link-item row mb-2">' +
+                '<div class="col-md-3">' +
+                '<select name="menu_items[' + count + '][columns][0][links][0][type]" class="form-control patropi-link-type">' +
+                '<option value="page">Página</option>' +
+                '<option value="custom">Link customizado</option>' +
+                '</select>' +
+                '</div>' +
+                '<div class="col-md-3 patropi-page-select">' +
+                '<select name="menu_items[' + count + '][columns][0][links][0][page_id]" class="form-control patropi-page-dropdown">' +
+                '<option value="">Selecione uma página</option>' +
+                '</select>' +
+                '</div>' +
+                '<div class="col-md-3 patropi-custom-url" style="display: none;">' +
+                '<input type="text" name="menu_items[' + count + '][columns][0][links][0][url]" value="" class="form-control" placeholder="URL">' +
+                '</div>' +
+                '<div class="col-md-2 patropi-custom-text" style="display: none;">' +
+                '<input type="text" name="menu_items[' + count + '][columns][0][links][0][text]" value="" class="form-control" placeholder="Texto">' +
+                '</div>' +
+                '<div class="col-md-1">' +
+                '<button type="button" class="btn btn-danger btn-sm patropi-remove-link">×</button>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '<button type="button" class="btn btn-secondary btn-sm mt-2 patropi-add-link">+ Adicionar link</button>' +
+                '</div>' +
+                '<div class="patropi-image-config mt-3" style="display: none;">' +
+                '<div class="row">' +
+                '<div class="col-md-6">' +
+                '<label><strong>Ícone (dashicon)</strong></label>' +
+                '<input type="text" name="menu_items[' + count + '][columns][0][image_data][icon]" value="" class="form-control" placeholder="dashicons-cart">' +
+                '</div>' +
+                '<div class="col-md-6">' +
+                '<label><strong>URL da imagem</strong></label>' +
+                '<input type="text" name="menu_items[' + count + '][columns][0][image_data][image_url]" value="" class="form-control" placeholder="https://...">' +
+                '</div>' +
+                '</div>' +
+                '<div class="row mt-2">' +
+                '<div class="col-md-6">' +
+                '<label><strong>Título</strong></label>' +
+                '<input type="text" name="menu_items[' + count + '][columns][0][image_data][title]" value="" class="form-control">' +
+                '</div>' +
+                '<div class="col-md-6">' +
+                '<label><strong>Descrição</strong></label>' +
+                '<input type="text" name="menu_items[' + count + '][columns][0][image_data][description]" value="" class="form-control">' +
+                '</div>' +
+                '</div>' +
+                '<div class="mt-2">' +
+                '<label><strong>Link (URL)</strong></label>' +
+                '<input type="text" name="menu_items[' + count + '][columns][0][image_data][link_url]" value="" class="form-control" placeholder="https://...">' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
                 '</div>' +
                 '<div class="patropi-simple-link-config mt-3">' +
                 '<hr><h5>Link do item (sem mega menu)</h5>' +

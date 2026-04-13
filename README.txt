@@ -3,9 +3,19 @@ Contributors: patropi
 Tags: patropi, addon, utilities
 Requires at least: 5.0
 Tested up to: 6.4
-Stable tag: 0.2.2
+Stable tag: 0.2.3
 
 == Changelog ==
+
+= 0.2.3 =
+* Mega Menu: Menu mobile/tablet com breakpoint em 1024px
+* Mega Menu: Botão hamburger para abrir menu mobile
+* Mega Menu: Menu mobile desliza da direita (slide)
+* Mega Menu: Overlay com fade ao abrir menu
+* Mega Menu: Botão X para fechar menu mobile
+* Mega Menu: Accordion mobile com animação de slide
+* Mega Menu: Submenus empilhados verticalmente no mobile
+* Correção: Novo item de menu usa sistema de colunas com botões
 
 = 0.2.2 =
 * Mega Menu: Dropdown full width com max-width configurável (1200px)

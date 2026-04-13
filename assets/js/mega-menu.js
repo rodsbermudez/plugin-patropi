@@ -17,6 +17,7 @@
             }
 
             initCloseOnClickOutside();
+            initMobileMenu();
         }
 
         function initHoverTrigger($menuItems) {
@@ -111,6 +112,43 @@
                             $dropdowns.removeClass('active');
                         });
                     }
+                }
+            });
+        }
+
+        function initMobileMenu() {
+            var $toggle = $('.patropi-mega-menu-toggle');
+            var $close = $('.patropi-mega-menu-mobile-close');
+            var $overlay = $('.patropi-mega-menu-mobile-overlay');
+            var $mobileMenu = $('.patropi-mega-menu-mobile');
+            var $submenuHeaders = $('.patropi-mega-menu-mobile-item-header');
+
+            $toggle.on('click', function() {
+                $mobileMenu.addClass('active');
+                $overlay.addClass('active');
+                $('body').css('overflow', 'hidden');
+            });
+
+            function closeMobileMenu() {
+                $mobileMenu.removeClass('active');
+                $overlay.removeClass('active');
+                $('body').css('overflow', '');
+            }
+
+            $close.on('click', closeMobileMenu);
+            $overlay.on('click', closeMobileMenu);
+
+            $submenuHeaders.on('click', function() {
+                var $item = $(this).closest('.patropi-mega-menu-mobile-item');
+                var $submenu = $item.find('.patropi-mega-menu-mobile-submenu');
+                
+                if ($item.hasClass('active')) {
+                    $item.removeClass('active');
+                    $submenu.animate({ maxHeight: '0' }, 300);
+                } else {
+                    $item.addClass('active');
+                    $submenu.css('max-height', '2000px');
+                    $submenu.animate({ maxHeight: $submenu[0].scrollHeight + 'px' }, 300);
                 }
             });
         }

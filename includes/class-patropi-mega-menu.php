@@ -279,6 +279,9 @@ class Patropi_Mega_Menu {
             }
         </style>
         <div class="patropi-mega-menu-wrapper">
+            <button type="button" class="patropi-mega-menu-toggle" aria-label="Abrir menu">
+                <span class="dashicons dashicons-menu"></span>
+            </button>
             <nav class="patropi-mega-menu-main">
                 <ul class="patropi-mega-menu-list">
                     <?php foreach ( $menu_items as $item ) : ?>
@@ -371,6 +374,97 @@ class Patropi_Mega_Menu {
                     <?php endforeach; ?>
                 </ul>
             </nav>
+            <div class="patropi-mega-menu-mobile-overlay"></div>
+            <div class="patropi-mega-menu-mobile">
+                <div class="patropi-mega-menu-mobile-header">
+                    <span class="patropi-mega-menu-mobile-title">Menu</span>
+                    <button type="button" class="patropi-mega-menu-mobile-close" aria-label="Fechar menu">
+                        <span class="dashicons dashicons-no-alt"></span>
+                    </button>
+                </div>
+                <ul class="patropi-mega-menu-mobile-list">
+                    <?php foreach ( $menu_items as $item ) : ?>
+                        <?php 
+                        $mobile_item_classes = 'patropi-mega-menu-mobile-item';
+                        if ( ! empty( $item['has_mega'] ) ) {
+                            $mobile_item_classes .= ' has-submenu';
+                        }
+                        
+                        $link = '#';
+                        if ( empty( $item['has_mega'] ) ) {
+                            if ( $item['link_type'] === 'page' && ! empty( $item['link_page_id'] ) ) {
+                                $link = get_permalink( $item['link_page_id'] );
+                            } elseif ( $item['link_type'] === 'custom' && ! empty( $item['link_url'] ) ) {
+                                $link = $item['link_url'];
+                            }
+                        }
+                        ?>
+                        <li class="<?php echo esc_attr( $mobile_item_classes ); ?>">
+                            <?php if ( ! empty( $item['has_mega'] ) ) : ?>
+                                <div class="patropi-mega-menu-mobile-item-header">
+                                    <span class="patropi-mega-menu-mobile-link"><?php echo esc_html( $item['text'] ); ?></span>
+                                    <span class="dashicons dashicons-arrow-down patropi-mega-menu-mobile-arrow"></span>
+                                </div>
+                                <div class="patropi-mega-menu-mobile-submenu">
+                                    <div class="patropi-mega-menu-mobile-submenu-inner">
+                                        <?php foreach ( $item['columns'] as $col ) : ?>
+                                            <div class="patropi-mega-menu-mobile-col">
+                                                <?php if ( ! empty( $col['has_title'] ) && ! empty( $col['title'] ) ) : ?>
+                                                    <div class="patropi-mega-menu-col-title"><?php echo esc_html( $col['title'] ); ?></div>
+                                                <?php endif; ?>
+                                                
+                                                <?php if ( $col['layout'] === 'links' && ! empty( $col['links'] ) ) : ?>
+                                                    <ul class="patropi-mega-menu-links">
+                                                        <?php foreach ( $col['links'] as $link_item ) : 
+                                                            $link_href = '#';
+                                                            $link_text = '';
+                                                            
+                                                            if ( $link_item['type'] === 'page' && ! empty( $link_item['page_id'] ) ) {
+                                                                $link_href = get_permalink( $link_item['page_id'] );
+                                                                $link_text = get_the_title( $link_item['page_id'] );
+                                                            } elseif ( $link_item['type'] === 'custom' ) {
+                                                                $link_href = $link_item['url'];
+                                                                $link_text = $link_item['text'];
+                                                            }
+                                                            
+                                                            if ( $link_text ) :
+                                                            ?>
+                                                            <li><a href="<?php echo esc_url( $link_href ); ?>"><?php echo esc_html( $link_text ); ?></a></li>
+                                                            <?php endif; ?>
+                                                        <?php endforeach; ?>
+                                                    </ul>
+                                                <?php elseif ( $col['layout'] === 'image' && ! empty( $col['image_data'] ) ) : ?>
+                                                    <div class="patropi-mega-menu-image-layout">
+                                                        <?php if ( ! empty( $col['image_data']['image_url'] ) ) : ?>
+                                                            <div class="patropi-mega-menu-image-bg" style="background-image: url('<?php echo esc_url( $col['image_data']['image_url'] ); ?>');">
+                                                                <div class="patropi-mega-menu-image-content">
+                                                                    <?php if ( ! empty( $col['image_data']['icon'] ) ) : ?>
+                                                                        <span class="dashicons <?php echo esc_attr( $col['image_data']['icon'] ); ?> patropi-mega-menu-icon"></span>
+                                                                    <?php endif; ?>
+                                                                    <?php if ( ! empty( $col['image_data']['title'] ) ) : ?>
+                                                                        <div class="patropi-mega-menu-image-title"><?php echo esc_html( $col['image_data']['title'] ); ?></div>
+                                                                    <?php endif; ?>
+                                                                </div>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                        <?php if ( ! empty( $col['image_data']['description'] ) ) : ?>
+                                                            <div class="patropi-mega-menu-image-desc"><?php echo esc_html( $col['image_data']['description'] ); ?></div>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                <?php endif; ?>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                            <?php else : ?>
+                                <a href="<?php echo esc_url( $link ); ?>" class="patropi-mega-menu-mobile-link">
+                                    <?php echo esc_html( $item['text'] ); ?>
+                                </a>
+                            <?php endif; ?>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
         </div>
         <?php
         return ob_get_clean();
