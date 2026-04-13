@@ -3,9 +3,22 @@ Contributors: patropi
 Tags: patropi, addon, utilities
 Requires at least: 5.0
 Tested up to: 6.4
-Stable tag: 0.2.1
+Stable tag: 0.2.2
 
 == Changelog ==
+
+= 0.2.2 =
+* Mega Menu: Dropdown full width com max-width configurável (1200px)
+* Mega Menu: Animação de entrada/saída (FadeIn/FadeOut ou SlideIn/SlideOut)
+* Mega Menu: Opção de padding configurável (top/bottom e left/right)
+* Mega Menu: Opção de sombra no dropdown
+* Mega Menu: Cor de fundo do dropdown (com opção transparente)
+* Mega Menu: Estrutura de coluna de imagem com background cover
+* Mega Menu: Gradiente overlay na imagem do coluna
+* Mega Menu: Card no dashboard com status e quantidade de itens
+* Correção: Toggles de transparência funcionando corretamente
+* Correção: Fundo aplicado apenas nos itens do menu (não no container)
+* Melhoria: Botões adicionar/remover colunas no builder
 
 = 0.2.1-dev =
 * [Em desenvolvimento]

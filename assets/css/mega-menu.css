@@ -13,8 +13,9 @@
 }
 
 .patropi-mega-menu-wrapper {
-    width: 100% !important;
-    max-width: 100% !important;
+    width: 100%;
+    max-width: var(--mm-max-width, 1200px);
+    margin: 0 auto;
 }
 
 .patropi-mega-menu-wrapper * {
@@ -23,11 +24,11 @@
 
 .patropi-mega-menu-main {
     width: 100% !important;
-    max-width: 100% !important;
+    max-width: var(--mm-max-width, 1200px) !important;
     padding: 0 !important;
-    margin: 0 !important;
+    margin: 0 auto !important;
     position: relative;
-    background-color: var(--mm-bg-color);
+    display: block;
 }
 
 .patropi-mega-menu-list {
@@ -39,7 +40,8 @@
     align-items: center;
     justify-content: flex-start;
     width: 100% !important;
-    max-width: 100% !important;
+    max-width: var(--mm-max-width, 1200px) !important;
+    margin: 0 auto !important;
 }
 
 .patropi-mega-menu-item {
@@ -68,30 +70,36 @@
     border-bottom-color: var(--mm-border-hover);
 }
 
-/* Dropdown Container - positioned relative to the menu main */
+/* Dropdown Container - full screen dropdown */
 .patropi-mega-menu-dropdown {
-    position: absolute;
+    position: fixed;
     left: 0;
     right: 0;
-    top: 100%;
+    top: auto;
     width: 100%;
-    background: #fff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    background: var(--mm-dropdown-bg, #ffffff);
+    box-shadow: var(--mm-shadow);
     z-index: 9999;
     display: none;
-    border: 1px solid #e0e0e0;
+    border-top: 1px solid #e0e0e0;
 }
 
 .patropi-mega-menu-dropdown-inner {
-    padding: 20px;
-    width: 100%;
+    padding: var(--mm-padding-y) var(--mm-padding-x);
+    width: 100% !important;
+    max-width: var(--mm-max-width) !important;
+    margin: 0 auto !important;
+    box-sizing: border-box;
+    display: block;
 }
 
 /* Columns */
 .patropi-mega-menu-columns {
-    display: flex;
+    display: flex !important;
     flex-wrap: wrap;
     margin: -10px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .patropi-mega-menu-col {
@@ -105,8 +113,6 @@
     font-size: 14px;
     color: #2c3e50;
     margin-bottom: 10px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid #e0e0e0;
 }
 
 /* Links Layout */
@@ -135,32 +141,59 @@
 
 /* Image Layout */
 .patropi-mega-menu-image-layout {
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 100%;
 }
 
-.patropi-mega-menu-image-link {
-    display: block;
-    margin-bottom: 10px;
+.patropi-mega-menu-image-bg {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 300px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    border-radius: 20px;
+    position: relative;
 }
 
-.patropi-mega-menu-image {
-    max-width: 100%;
-    height: auto;
-    border-radius: 4px;
+.patropi-mega-menu-image-bg::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(0deg, #000 0%, rgba(0, 0, 0, 0.00) 100%);
+    border-radius: 0 0 20px 20px;
+    z-index: 1;
+}
+
+.patropi-mega-menu-image-content {
+    position: absolute;
+    bottom: 25px;
+    left: 25px;
+    text-align: left;
+    padding: 0;
+    z-index: 2;
 }
 
 .patropi-mega-menu-icon {
     font-size: 32px;
-    color: #555;
-    margin-bottom: 8px;
+    color: #fff;
+    margin-bottom: 15px;
     display: block;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
 .patropi-mega-menu-image-title {
     font-weight: 600;
     font-size: 14px;
-    color: #2c3e50;
-    margin-bottom: 4px;
+    color: #fff;
+    margin-bottom: 0;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
 .patropi-mega-menu-image-desc {

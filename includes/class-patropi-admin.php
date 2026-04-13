@@ -151,6 +151,13 @@ class Patropi_Addon_Admin {
             $faq_count = $faq_count ? $faq_count->publish : 0;
         }
 
+        require_once PATROPI_ADDON_PLUGIN_DIR . 'includes/class-patropi-mega-menu.php';
+        $mega_menu = new Patropi_Mega_Menu();
+        $mega_settings = $mega_menu->get_settings();
+        $mega_enabled = ! empty( $mega_settings['enabled'] );
+        $menu_items = $mega_settings['menu_items'] ?? array();
+        $menu_item_count = count( $menu_items );
+
         $this->render_layout_start();
         $this->render_header( 'dashboard' );
         ?>
@@ -174,6 +181,24 @@ class Patropi_Addon_Admin {
                 <div class="card-footer">
                     <a href="<?php echo admin_url( 'admin.php?page=patropi-faq' ); ?>" class="btn btn-primary btn-sm">Configurações</a>
                     <a href="<?php echo admin_url( 'edit.php?post_type=faq-patropi' ); ?>" class="btn btn-secondary btn-sm">Ver FAQs</a>
+                </div>
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span><strong>Módulo Mega Menu</strong></span>
+                    <?php if ( $mega_enabled ) : ?>
+                        <span class="badge bg-success">Ativado</span>
+                    <?php else : ?>
+                        <span class="badge bg-secondary">Desativado</span>
+                    <?php endif; ?>
+                </div>
+                <div class="card-body">
+                    <p class="mb-1"><strong>Itens do menu:</strong> <?php echo $menu_item_count; ?></p>
+                    <p class="mb-0"><strong>Shortcode:</strong> <code>[patropi-mega-menu]</code></p>
+                </div>
+                <div class="card-footer">
+                    <a href="<?php echo admin_url( 'admin.php?page=patropi-mega-menu' ); ?>" class="btn btn-primary btn-sm">Configurações</a>
                 </div>
             </div>
 
@@ -408,10 +433,32 @@ class Patropi_Addon_Admin {
 
             if ( isset( $_POST['main_menu'] ) && is_array( $_POST['main_menu'] ) ) {
                 $new_settings['main_menu'] = $_POST['main_menu'];
+                
+                $transparent_fields = array(
+                    'text_color_transparent',
+                    'text_hover_transparent',
+                    'bg_color_transparent',
+                    'bg_hover_transparent',
+                    'border_color_transparent',
+                    'border_hover_transparent'
+                );
+                
+                foreach ( $transparent_fields as $field ) {
+                    if ( ! isset( $_POST['main_menu'][ $field ] ) ) {
+                        $new_settings['main_menu'][ $field ] = 0;
+                    }
+                }
             }
 
             if ( isset( $_POST['mega_menu'] ) && is_array( $_POST['mega_menu'] ) ) {
                 $new_settings['mega_menu'] = $_POST['mega_menu'];
+                
+                if ( ! isset( $_POST['mega_menu']['dropdown_bg_transparent'] ) ) {
+                    $new_settings['mega_menu']['dropdown_bg_transparent'] = 0;
+                }
+                if ( ! isset( $_POST['mega_menu']['shadow'] ) ) {
+                    $new_settings['mega_menu']['shadow'] = 0;
+                }
             }
 
             if ( isset( $_POST['menu_items'] ) && is_array( $_POST['menu_items'] ) ) {
@@ -456,7 +503,7 @@ class Patropi_Addon_Admin {
                                 <label><strong><?php _e( 'Cor (normal)', 'patropi-addon' ); ?></strong></label>
                                 <input type="color" name="main_menu[text_color]" value="<?php echo esc_attr( $settings['main_menu']['text_color'] ); ?>" class="form-control mb-2" style="width: 60px; height: 38px; padding: 2px;">
                                 <label class="patropi-toggle" style="margin: 0;">
-                                    <input type="checkbox" name="main_menu[text_color_transparent]" value="1" <?php checked( $settings['main_menu']['text_color'], 'transparent' ); ?> onchange="document.querySelector('input[name=\'main_menu[text_color]\']').value = this.checked ? 'transparent' : '#333333';">
+                                    <input type="checkbox" name="main_menu[text_color_transparent]" value="1" <?php checked( ! empty( $settings['main_menu']['text_color_transparent'] ) ); ?>>
                                     <span class="patropi-toggle-switch"></span>
                                     <span class="patropi-toggle-label" style="font-size: 12px;"><?php _e( 'Transparente', 'patropi-addon' ); ?></span>
                                 </label>
@@ -465,7 +512,7 @@ class Patropi_Addon_Admin {
                                 <label><strong><?php _e( 'Cor (hover)', 'patropi-addon' ); ?></strong></label>
                                 <input type="color" name="main_menu[text_hover]" value="<?php echo esc_attr( $settings['main_menu']['text_hover'] ); ?>" class="form-control mb-2" style="width: 60px; height: 38px; padding: 2px;">
                                 <label class="patropi-toggle" style="margin: 0;">
-                                    <input type="checkbox" name="main_menu[text_hover_transparent]" value="1" <?php checked( $settings['main_menu']['text_hover'], 'transparent' ); ?> onchange="document.querySelector('input[name=\'main_menu[text_hover]\']').value = this.checked ? 'transparent' : '#2c3e50';">
+                                    <input type="checkbox" name="main_menu[text_hover_transparent]" value="1" <?php checked( ! empty( $settings['main_menu']['text_hover_transparent'] ) ); ?>>
                                     <span class="patropi-toggle-switch"></span>
                                     <span class="patropi-toggle-label" style="font-size: 12px;"><?php _e( 'Transparente', 'patropi-addon' ); ?></span>
                                 </label>
@@ -480,7 +527,7 @@ class Patropi_Addon_Admin {
                                 <label><strong><?php _e( 'Cor (normal)', 'patropi-addon' ); ?></strong></label>
                                 <input type="color" name="main_menu[bg_color]" value="<?php echo esc_attr( $settings['main_menu']['bg_color'] ); ?>" class="form-control mb-2" style="width: 60px; height: 38px; padding: 2px;">
                                 <label class="patropi-toggle" style="margin: 0;">
-                                    <input type="checkbox" name="main_menu[bg_color_transparent]" value="1" <?php checked( $settings['main_menu']['bg_color'], 'transparent' ); ?> onchange="document.querySelector('input[name=\'main_menu[bg_color]\']').value = this.checked ? 'transparent' : 'transparent';">
+                                    <input type="checkbox" name="main_menu[bg_color_transparent]" value="1" <?php checked( ! empty( $settings['main_menu']['bg_color_transparent'] ) ); ?>>
                                     <span class="patropi-toggle-switch"></span>
                                     <span class="patropi-toggle-label" style="font-size: 12px;"><?php _e( 'Transparente', 'patropi-addon' ); ?></span>
                                 </label>
@@ -489,7 +536,7 @@ class Patropi_Addon_Admin {
                                 <label><strong><?php _e( 'Cor (hover)', 'patropi-addon' ); ?></strong></label>
                                 <input type="color" name="main_menu[bg_hover]" value="<?php echo esc_attr( $settings['main_menu']['bg_hover'] ); ?>" class="form-control mb-2" style="width: 60px; height: 38px; padding: 2px;">
                                 <label class="patropi-toggle" style="margin: 0;">
-                                    <input type="checkbox" name="main_menu[bg_hover_transparent]" value="1" <?php checked( $settings['main_menu']['bg_hover'], 'transparent' ); ?> onchange="document.querySelector('input[name=\'main_menu[bg_hover]\']').value = this.checked ? 'transparent' : 'transparent';">
+                                    <input type="checkbox" name="main_menu[bg_hover_transparent]" value="1" <?php checked( ! empty( $settings['main_menu']['bg_hover_transparent'] ) ); ?>>
                                     <span class="patropi-toggle-switch"></span>
                                     <span class="patropi-toggle-label" style="font-size: 12px;"><?php _e( 'Transparente', 'patropi-addon' ); ?></span>
                                 </label>
@@ -508,7 +555,7 @@ class Patropi_Addon_Admin {
                                 <label><strong><?php _e( 'Cor (normal)', 'patropi-addon' ); ?></strong></label>
                                 <input type="color" name="main_menu[border_color]" value="<?php echo esc_attr( $settings['main_menu']['border_color'] ); ?>" class="form-control mb-2" style="width: 60px; height: 38px; padding: 2px;">
                                 <label class="patropi-toggle" style="margin: 0;">
-                                    <input type="checkbox" name="main_menu[border_color_transparent]" value="1" <?php checked( $settings['main_menu']['border_color'], 'transparent' ); ?> onchange="document.querySelector('input[name=\'main_menu[border_color]\']').value = this.checked ? 'transparent' : 'transparent';">
+                                    <input type="checkbox" name="main_menu[border_color_transparent]" value="1" <?php checked( ! empty( $settings['main_menu']['border_color_transparent'] ) ); ?>>
                                     <span class="patropi-toggle-switch"></span>
                                     <span class="patropi-toggle-label" style="font-size: 12px;"><?php _e( 'Transparente', 'patropi-addon' ); ?></span>
                                 </label>
@@ -517,7 +564,7 @@ class Patropi_Addon_Admin {
                                 <label><strong><?php _e( 'Cor (hover)', 'patropi-addon' ); ?></strong></label>
                                 <input type="color" name="main_menu[border_hover_color]" value="<?php echo esc_attr( $settings['main_menu']['border_hover_color'] ); ?>" class="form-control mb-2" style="width: 60px; height: 38px; padding: 2px;">
                                 <label class="patropi-toggle" style="margin: 0;">
-                                    <input type="checkbox" name="main_menu[border_hover_transparent]" value="1" <?php checked( $settings['main_menu']['border_hover_color'], 'transparent' ); ?> onchange="document.querySelector('input[name=\'main_menu[border_hover_color]\']').value = this.checked ? 'transparent' : '#2c3e50';">
+                                    <input type="checkbox" name="main_menu[border_hover_transparent]" value="1" <?php checked( ! empty( $settings['main_menu']['border_hover_transparent'] ) ); ?>>
                                     <span class="patropi-toggle-switch"></span>
                                     <span class="patropi-toggle-label" style="font-size: 12px;"><?php _e( 'Transparente', 'patropi-addon' ); ?></span>
                                 </label>
@@ -550,6 +597,35 @@ class Patropi_Addon_Admin {
                                 <option value="fade" <?php selected( $settings['mega_menu']['animation'] ?? 'fade', 'fade' ); ?>><?php _e( 'FadeIn / FadeOut', 'patropi-addon' ); ?></option>
                                 <option value="slide" <?php selected( $settings['mega_menu']['animation'] ?? 'fade', 'slide' ); ?>><?php _e( 'SlideIn / SlideOut', 'patropi-addon' ); ?></option>
                             </select>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-6 col-md-3">
+                            <label><strong><?php _e( 'Padding (top/bottom)', 'patropi-addon' ); ?></strong></label>
+                            <input type="text" name="mega_menu[padding_y]" value="<?php echo esc_attr( $settings['mega_menu']['padding_y'] ?? '20px' ); ?>" class="form-control" placeholder="ex: 20px">
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <label><strong><?php _e( 'Padding (left/right)', 'patropi-addon' ); ?></strong></label>
+                            <input type="text" name="mega_menu[padding_x]" value="<?php echo esc_attr( $settings['mega_menu']['padding_x'] ?? '20px' ); ?>" class="form-control" placeholder="ex: 20px">
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <label><strong><?php _e( 'Sombra inferior', 'patropi-addon' ); ?></strong></label>
+                            <label class="patropi-toggle" style="margin-top: 5px;">
+                                <input type="checkbox" name="mega_menu[shadow]" value="1" <?php checked( $settings['mega_menu']['shadow'] ?? false, true ); ?>>
+                                <span class="patropi-toggle-switch"></span>
+                                <span class="patropi-toggle-label"><?php _e( 'Ativar', 'patropi-addon' ); ?></span>
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <label><strong><?php _e( 'Cor de fundo', 'patropi-addon' ); ?></strong></label>
+                            <div class="d-flex align-items-center gap-2">
+                                <input type="color" name="mega_menu[dropdown_bg]" value="<?php echo esc_attr( $settings['mega_menu']['dropdown_bg'] ?? '#ffffff' ); ?>" class="form-control form-control-color" style="width: 50px; height: 40px; padding: 2px;">
+                                <label class="patropi-toggle" style="margin-top: 0;">
+                                    <input type="checkbox" name="mega_menu[dropdown_bg_transparent]" value="1" <?php checked( ! empty( $settings['mega_menu']['dropdown_bg_transparent'] ) ); ?>>
+                                    <span class="patropi-toggle-switch"></span>
+                                    <span class="patropi-toggle-label">Transparente</span>
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>

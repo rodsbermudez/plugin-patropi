@@ -65,6 +65,12 @@
             $item.addClass('active');
             $dropdown.addClass('active');
             
+            var itemOffset = $item.offset();
+            var itemHeight = $item.outerHeight();
+            $dropdown.css({
+                'top': itemOffset.top + itemHeight
+            });
+            
             if (settings.animation === 'fade') {
                 $dropdown.stop(true, true).fadeIn(300);
             } else if (settings.animation === 'slide') {
@@ -77,11 +83,13 @@
                 $dropdown.stop(true, true).fadeOut(200, function() {
                     $item.removeClass('active');
                     $dropdown.removeClass('active');
+                    $dropdown.css('top', '');
                 });
             } else if (settings.animation === 'slide') {
                 $dropdown.stop(true, true).slideUp(200, function() {
                     $item.removeClass('active');
                     $dropdown.removeClass('active');
+                    $dropdown.css('top', '');
                 });
             }
         }

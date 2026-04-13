@@ -207,13 +207,57 @@ class Patropi_Mega_Menu {
         }
 
         $main_menu = $settings['main_menu'] ?? array();
-        $text_color = $main_menu['text_color'] ?? '#333333';
-        $text_hover = $main_menu['text_hover'] ?? '#2c3e50';
-        $bg_color = $main_menu['bg_color'] ?? 'transparent';
-        $bg_hover = $main_menu['bg_hover'] ?? 'transparent';
+        
+        if ( ! empty( $main_menu['text_color_transparent'] ) ) {
+            $text_color = 'transparent';
+        } else {
+            $text_color = ! empty( $main_menu['text_color'] ) ? $main_menu['text_color'] : '#333333';
+        }
+        
+        if ( ! empty( $main_menu['text_hover_transparent'] ) ) {
+            $text_hover = 'transparent';
+        } else {
+            $text_hover = ! empty( $main_menu['text_hover'] ) ? $main_menu['text_hover'] : '#2c3e50';
+        }
+        
+        if ( ! empty( $main_menu['bg_color_transparent'] ) ) {
+            $bg_color = 'transparent';
+        } else {
+            $bg_color = ! empty( $main_menu['bg_color'] ) ? $main_menu['bg_color'] : 'transparent';
+        }
+        
+        if ( ! empty( $main_menu['bg_hover_transparent'] ) ) {
+            $bg_hover = 'transparent';
+        } else {
+            $bg_hover = ! empty( $main_menu['bg_hover'] ) ? $main_menu['bg_hover'] : 'transparent';
+        }
+        
         $border_width = $main_menu['border_width'] ?? '0px';
-        $border_color = $main_menu['border_color'] ?? 'transparent';
-        $border_hover = $main_menu['border_hover_color'] ?? '#2c3e50';
+        
+        if ( ! empty( $main_menu['border_color_transparent'] ) ) {
+            $border_color = 'transparent';
+        } else {
+            $border_color = ! empty( $main_menu['border_color'] ) ? $main_menu['border_color'] : 'transparent';
+        }
+        
+        if ( ! empty( $main_menu['border_hover_transparent'] ) ) {
+            $border_hover = 'transparent';
+        } else {
+            $border_hover = ! empty( $main_menu['border_hover_color'] ) ? $main_menu['border_hover_color'] : '#2c3e50';
+        }
+
+        $mega_menu = $settings['mega_menu'] ?? array();
+        $padding_y = $mega_menu['padding_y'] ?? '20px';
+        $padding_x = $mega_menu['padding_x'] ?? '20px';
+        $shadow = ! empty( $mega_menu['shadow'] ) ? '0 4px 12px rgba(0, 0, 0, 0.15)' : 'none';
+        $menu_width = $mega_menu['width'] ?? '100%';
+        $menu_max_width = ! empty( $mega_menu['max_width'] ) ? $mega_menu['max_width'] : '1200px';
+        
+        if ( ! empty( $mega_menu['dropdown_bg_transparent'] ) ) {
+            $dropdown_bg = 'transparent';
+        } else {
+            $dropdown_bg = ! empty( $mega_menu['dropdown_bg'] ) ? $mega_menu['dropdown_bg'] : '#ffffff';
+        }
 
         ob_start();
         ?>
@@ -226,6 +270,12 @@ class Patropi_Mega_Menu {
                 --mm-border-width: <?php echo esc_attr( $border_width ); ?>;
                 --mm-border-color: <?php echo esc_attr( $border_color ); ?>;
                 --mm-border-hover: <?php echo esc_attr( $border_hover ); ?>;
+                --mm-padding-y: <?php echo esc_attr( $padding_y ); ?>;
+                --mm-padding-x: <?php echo esc_attr( $padding_x ); ?>;
+                --mm-shadow: <?php echo esc_attr( $shadow ); ?>;
+                --mm-width: <?php echo esc_attr( $menu_width ); ?>;
+                --mm-max-width: <?php echo esc_attr( $menu_max_width ); ?>;
+                --mm-dropdown-bg: <?php echo esc_attr( $dropdown_bg ); ?>;
             }
         </style>
         <div class="patropi-mega-menu-wrapper">
@@ -291,21 +341,19 @@ class Patropi_Mega_Menu {
                                                     <?php elseif ( $col['layout'] === 'image' && ! empty( $col['image_data'] ) ) : ?>
                                                         <div class="patropi-mega-menu-image-layout">
                                                             <?php if ( ! empty( $col['image_data']['image_url'] ) ) : ?>
-                                                                <a href="<?php echo esc_url( $col['image_data']['link_url'] ); ?>" class="patropi-mega-menu-image-link">
-                                                                    <img src="<?php echo esc_url( $col['image_data']['image_url'] ); ?>" alt="<?php echo esc_attr( $col['image_data']['title'] ); ?>" class="patropi-mega-menu-image">
-                                                                </a>
-                                                            <?php endif; ?>
-                                                            
-                                                            <?php if ( ! empty( $col['image_data']['icon'] ) ) : ?>
-                                                                <span class="dashicons <?php echo esc_attr( $col['image_data']['icon'] ); ?> patropi-mega-menu-icon"></span>
-                                                            <?php endif; ?>
-                                                            
-                                                            <?php if ( ! empty( $col['image_data']['title'] ) ) : ?>
-                                                                <div class="patropi-mega-menu-image-title">
-                                                                    <?php echo esc_html( $col['image_data']['title'] ); ?>
+                                                                <div class="patropi-mega-menu-image-bg" style="background-image: url('<?php echo esc_url( $col['image_data']['image_url'] ); ?>');">
+                                                                    <div class="patropi-mega-menu-image-content">
+                                                                        <?php if ( ! empty( $col['image_data']['icon'] ) ) : ?>
+                                                                            <span class="dashicons <?php echo esc_attr( $col['image_data']['icon'] ); ?> patropi-mega-menu-icon"></span>
+                                                                        <?php endif; ?>
+                                                                        <?php if ( ! empty( $col['image_data']['title'] ) ) : ?>
+                                                                            <div class="patropi-mega-menu-image-title">
+                                                                                <?php echo esc_html( $col['image_data']['title'] ); ?>
+                                                                            </div>
+                                                                        <?php endif; ?>
+                                                                    </div>
                                                                 </div>
                                                             <?php endif; ?>
-                                                            
                                                             <?php if ( ! empty( $col['image_data']['description'] ) ) : ?>
                                                                 <div class="patropi-mega-menu-image-desc">
                                                                     <?php echo esc_html( $col['image_data']['description'] ); ?>

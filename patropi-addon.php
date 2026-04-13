@@ -3,7 +3,7 @@
  * Plugin Name: Patropi Add-ons
  * Plugin URI: https://patropi.com.br
  * Description: Plugin utilitário com funcionalidades extras para WordPress
- * Version: 0.2.1-dev
+ * Version: 0.2.2
  * Author: Rodrigo Bermudez
  * Author URI: https://patropicomunica.com.br
  * License: GPL v2 or later
