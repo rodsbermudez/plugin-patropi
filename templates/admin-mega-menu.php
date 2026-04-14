@@ -125,6 +125,23 @@ if ( ! defined( 'ABSPATH' ) ) {
                     <input type="text" name="main_menu[item_padding_x]" value="<?php echo esc_attr( $settings['main_menu']['item_padding_x'] ?? '20px' ); ?>" class="form-control" placeholder="ex: 20px">
                 </div>
             </div>
+            
+            <div class="patropi-style-section mt-4">
+                <h5 class="text-muted mb-3" style="font-size: 12px; text-transform: uppercase;"><?php _e( 'Ícone Indicador do Dropdown', 'patropi-addon' ); ?></h5>
+                <p class="patropi-card-text" style="font-size: 12px; margin-bottom: 15px;"><?php _e( 'Este ícone aparecerá ao lado dos itens do menu principal que possuem mega menu e girará 180º ao abrir.', 'patropi-addon' ); ?></p>
+                <div class="icon-select-container" style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <?php 
+                    $selected_icon = $settings['main_menu']['dropdown_icon'] ?? 'dashicons-arrow-down-alt2';
+                    foreach ( $icon_options as $key => $option ) : 
+                    ?>
+                        <label class="icon-option" style="cursor: pointer; padding: 8px; border: 2px solid #ddd; border-radius: 4px; display: flex; align-items: center; gap: 5px; <?php echo ( $selected_icon === $key ) ? 'border-color: #2c3e50; background: #f8f9fa;' : ''; ?>">
+                            <input type="radio" name="main_menu[dropdown_icon]" value="<?php echo esc_attr( $key ); ?>" <?php checked( $selected_icon, $key ); ?> style="display: none;">
+                            <span class="dashicons <?php echo esc_attr( $option['closed'] ); ?>" style="color: #555;"></span>
+                            <span style="font-size: 12px;"><?php echo esc_html( $option['label'] ); ?></span>
+                        </label>
+                    <?php endforeach; ?>
+                </div>
+            </div>
         </div>
 
         <div class="patropi-card">

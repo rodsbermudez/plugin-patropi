@@ -258,6 +258,7 @@ class Patropi_Mega_Menu {
         $item_gap = $main_menu['item_gap'] ?? '0px';
         $item_padding_y = $main_menu['item_padding_y'] ?? '15px';
         $item_padding_x = $main_menu['item_padding_x'] ?? '20px';
+        $dropdown_icon = $main_menu['dropdown_icon'] ?? 'dashicons-arrow-down-alt2';
 
         $mega_menu = $settings['mega_menu'] ?? array();
         $padding_y = $mega_menu['padding_y'] ?? '20px';
@@ -329,6 +330,9 @@ class Patropi_Mega_Menu {
                         <li class="<?php echo esc_attr( $item_classes ); ?>">
                             <a href="<?php echo esc_url( $link ); ?>" class="patropi-mega-menu-link">
                                 <?php echo esc_html( $item['text'] ); ?>
+                                <?php if ( ! empty( $item['has_mega'] ) ) : ?>
+                                    <span class="dashicons <?php echo esc_attr( $dropdown_icon ); ?> patropi-mega-menu-dropdown-icon"></span>
+                                <?php endif; ?>
                             </a>
                             
                             <?php if ( ! empty( $item['has_mega'] ) && ! empty( $item['columns'] ) ) : ?>

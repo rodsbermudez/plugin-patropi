@@ -345,6 +345,9 @@ class Patropi_Addon_Admin {
             $settings = array();
         }
         
+        $settings_obj = Patropi_Addon_Settings::get_instance();
+        $icon_options = $settings_obj->get_icon_options();
+        
         $settings = wp_parse_args( $settings, array(
             'enabled' => false,
             'main_menu' => array(

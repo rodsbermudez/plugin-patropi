@@ -83,9 +83,32 @@
 .patropi-mega-menu-item .patropi-mega-menu-link:focus {
     color: var(--mm-text-color-hover);
     background-color: var(--mm-bg-hover);
-    border-bottom-width: 2px;
+    border-bottom-width: var(--mm-border-width);
     border-bottom-style: solid;
     border-bottom-color: var(--mm-border-hover);
+}
+
+.patropi-mega-menu-link {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.patropi-mega-menu-dropdown-icon {
+    font-size: 16px !important;
+    width: 16px !important;
+    height: 16px !important;
+    display: inline-block !important;
+    vertical-align: middle;
+    transition: transform 0.3s ease !important;
+    line-height: 1 !important;
+}
+
+.patropi-mega-menu-item.has-mega-menu:hover .patropi-mega-menu-dropdown-icon,
+.patropi-mega-menu-item.has-mega-menu:focus-within .patropi-mega-menu-dropdown-icon,
+.patropi-mega-menu-item.active .patropi-mega-menu-dropdown-icon,
+.patropi-mega-menu-item.has-mega-menu.active > .patropi-mega-menu-link .patropi-mega-menu-dropdown-icon {
+    transform: rotate(180deg) !important;
 }
 
 /* Dropdown Container - full screen dropdown */
