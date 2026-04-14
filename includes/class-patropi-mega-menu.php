@@ -4,10 +4,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class Patropi_Mega_Menu {
+    private static $instance = null;
     private $option_name = 'patropi_mega_menu_settings';
     private $defaults = array();
 
-    public function __construct() {
+    public static function get_instance() {
+        if ( null === self::$instance ) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+
+    private function __construct() {
         $this->defaults = $this->get_default_settings();
         add_shortcode( 'patropi-mega-menu', array( $this, 'render_shortcode' ) );
         add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_assets' ) );
@@ -488,5 +496,3 @@ class Patropi_Mega_Menu {
         return ob_get_clean();
     }
 }
-
-new Patropi_Mega_Menu();

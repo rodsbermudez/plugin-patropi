@@ -1,0 +1,308 @@
+# Documentação Técnica - Patropi Add-ons
+
+## 1. Visão Geral do Plugin
+
+**Nome:** Patropi Add-ons  
+**Versão:** 0.2.5  
+**Descrição:** Plugin utilitário WordPress com funcionalidades extras para sites.  
+**Repositório:** https://github.com/rodsbermudez/plugin-patropi  
+**Autor:** Rodrigo Bermudez  
+**License:** GPL v2 or later
+
+---
+
+## 2. Estrutura de Arquivos
+
+```
+patropi-addon/
+├── patropi-addon.php              # Arquivo principal do plugin
+├── README.txt                     # Changelog e documentação
+├── estrutura.txt                  # Este arquivo
+├── uninstall.php                  # Script de desinstalação
+├── assets/
+│   ├── css/
+│   │   ├── admin.css             # Estilos do painel admin
+│   │   ├── faq.css               # Estilos do módulo FAQ
+│   │   └── mega-menu.css         # Estilos do módulo Mega Menu
+│   ├── js/
+│   │   ├── admin.js              # JavaScript do painel admin
+│   │   ├── faq.js                # JavaScript do módulo FAQ
+│   │   └── mega-menu.js          # JavaScript do módulo Mega Menu
+│   └── images/
+│       ├── patropi-logo.png
+│       ├── patropi-favicon.png
+│       └── patropi-favicon-old.png
+└── includes/
+    ├── class-patropi-settings.php    # Configurações gerais
+    ├── class-patropi-admin.php       # Páginas administrativas
+    ├── class-patropi-faq.php         # Módulo FAQ
+    └── class-patropi-mega-menu.php   # Módulo Mega Menu
+```
+
+---
+
+## 3. Sistema de Branches
+
+### 3.1 Estrutura de Branches
+
+O plugin utiliza duas branches principais:
+
+#### Branch `main`
+- **Propósito:** Versões estáveis released
+- **Política:** Apenas merges, nunca commits diretos
+- **Histórico de Versões:**
+  - 0.1.2 - Versão estável com FAQ
+  - 0.2.0 a 0.2.5 - Versões com Mega Menu
+
+#### Branch `develop`
+- **Propósito:** Desenvolvimento de novas funcionalidades
+- **Política:** Branch ativa de desenvolvimento
+- **Fluxo:** Novas features → develop → teste → merge para main
+
+### 3.2 Fluxo de Trabalho
+
+```
+1. Desenvolvimento (develop)
+   │
+   ├───> Commit incremental (v0.2.x-dev)
+   │
+   └───> Versionamento (v0.2.x)
+         │
+         └───> Merge para main (release)
+               │
+               └───> Push para remote
+```
+
+### 3.3 Comandos Git
+
+```bash
+# Ver branches locais
+git branch
+
+# Ver todas as branches (incluindo remote)
+git branch -a
+
+# Criar e mudar para nova branch de desenvolvimento
+git checkout -b develop
+
+# Fazer merge de develop para main
+git checkout main
+git merge develop
+
+# Enviar para repositório remoto
+git push origin main develop
+```
+
+### 3.4 Controle de Versão
+
+| Versão | Branch | Data | Descrição |
+|--------|--------|------|-----------|
+| 0.1.0 | main | - | Versão inicial |
+| 0.1.1 | main | - | Módulo FAQ completo |
+| 0.1.2 | main | - | Sistema de ícones com rotação |
+| 0.2.0 | develop → main | - | Novo módulo Mega Menu |
+| 0.2.1-dev | develop | - | Mega Menu em desenvolvimento |
+| 0.2.2 | develop | - | Melhorias e correções |
+| 0.2.3 | develop | - | Menu mobile/tablet |
+| 0.2.4 | develop | - | Configurações mobile |
+| 0.2.5 | develop → main | recente | Layout do menu desktop |
+
+---
+
+## 4. Módulos do Plugin
+
+### 4.1 Módulo FAQ (Versão 0.1.1+)
+
+**Shortcode:** `[faq-patropi]`
+
+**Funcionalidades:**
+- Custom Post Type para FAQs
+- Campo de seleção múltipla de páginas
+- Accordion com opções personalizáveis
+- Sistema de CSS customizável com editor e reset
+- Toggle para ativar/desativar no admin
+- Sistema de ícones com rotação de 180º
+
+**Ícones disponíveis:**
+- Insert, Remove
+- Arrow Up, Arrow Down
+- Arrow Up (Alt2), Arrow Down (Alt2)
+- Plus (Alt2), Minus
+
+---
+
+### 4.2 Módulo Mega Menu (Versão 0.2.0+)
+
+**Shortcode:** `[patropi-mega-menu]`
+
+**Funcionalidades do Módulo:**
+
+#### Menu Principal (Desktop)
+- Interface gráfica no admin para criar menu (builder)
+- Estilos customizáveis (cores, fundo, borda)
+- Layout do menu: alinhamento (esquerda/centro/direita)
+- Gap configurável entre itens
+- Padding configurável dos itens (top/bottom e left/right)
+- Transparência toggles para todas as cores
+- Borda inferior configurável (espessura e cores)
+
+#### Mega Menu (Dropdown)
+- Largura configurável (ex: 100% ou 1200px)
+- Largura máxima configurável
+- Trigger: hover (ao passar mouse) ou click (ao clicar)
+- Animação: FadeIn/FadeOut ou SlideIn/SlideOut
+- Padding configurável do dropdown (top/bottom e left/right)
+- Opção de sombra no dropdown
+- Cor de fundo do dropdown (com opção transparente)
+
+#### Colunas do Mega Menu
+- 1-6 colunas configuráveis por item
+- Largura em percentual por coluna
+- Título opcional por coluna
+- Dois layouts por coluna:
+  - **Layout Links**: adicionar páginas ou links customizados (máx 10)
+  - **Layout Imagem**: background cover, ícone, título, descrição, link
+
+#### Mobile/Tablet
+- Breakpoint em 1024px
+- Botão hamburger para abrir menu
+- Menu desliza da direita (slide)
+- Overlay com fade
+- Card de configurações separado no admin
+- Cor do ícone configurável
+- Cor de fundo configurável
+- Largura do menu configurável (50-100%)
+- Accordion com animação de slide
+- Submenus empilhados verticalmente
+
+---
+
+## 5. Estrutura de Configurações (Banco de Dados)
+
+O plugin salva as configurações na tabela `wp_options` com a chave `patropi_addon_settings`:
+
+```php
+$settings = array(
+    'enabled' => 1,
+    'main_menu' => array(
+        'text_color' => '#333333',
+        'text_hover' => '#2c3e50',
+        'text_color_transparent' => false,
+        'text_hover_transparent' => false,
+        'bg_color' => 'transparent',
+        'bg_hover' => 'transparent',
+        'bg_color_transparent' => false,
+        'bg_hover_transparent' => false,
+        'border_width' => '0px',
+        'border_color' => 'transparent',
+        'border_hover' => '#2c3e50',
+        'align' => 'flex-start',
+        'item_gap' => '0px',
+        'item_padding_y' => '15px',
+        'item_padding_x' => '20px'
+    ),
+    'mega_menu' => array(
+        'width' => '100%',
+        'max_width' => '1200px',
+        'trigger' => 'hover',
+        'animation' => 'fade',
+        'padding_y' => '20px',
+        'padding_x' => '20px',
+        'shadow' => false,
+        'dropdown_bg' => '#ffffff',
+        'dropdown_bg_transparent' => false,
+        'mobile_icon_color' => '#333333',
+        'mobile_bg_color' => '#ffffff',
+        'mobile_width' => 85
+    ),
+    'menu_items' => array()
+);
+```
+
+---
+
+## 6. Variáveis CSS do Mega Menu
+
+```css
+.patropi-mega-menu-wrapper {
+    --mm-text-color: #333333;
+    --mm-text-color-hover: #2c3e50;
+    --mm-bg-color: transparent;
+    --mm-bg-hover: transparent;
+    --mm-border-width: 0px;
+    --mm-border-color: transparent;
+    --mm-border-hover: #2c3e50;
+    --mm-padding-y: 20px;
+    --mm-padding-x: 20px;
+    --mm-shadow: none;
+    --mm-width: 100%;
+    --mm-max-width: 1200px;
+    --mm-dropdown-bg: #ffffff;
+    --mm-mobile-icon-color: #333333;
+    --mm-mobile-bg-color: #ffffff;
+    --mm-mobile-width: 85%;
+    --mm-item-align: flex-start;
+    --mm-item-gap: 0px;
+    --mm-item-padding-y: 15px;
+    --mm-item-padding-x: 20px;
+}
+```
+
+---
+
+## 7. Páginas do Admin
+
+1. **Dashboard** (`patropi-addon`) - Visão geral dos módulos
+2. **Configurações FAQ** (`patropi-faq`) - Configurações do módulo FAQ
+3. **Configurações Mega Menu** (`patropi-mega-menu`) - Builder e configurações
+
+---
+
+## 8. Requisitos Técnicos
+
+- **WordPress:** 5.0+
+- **Testado até:** 6.4
+- **PHP:** 7.0+
+
+---
+
+## 9. Changelog Completo
+
+### 0.2.5
+- Card "Layout do Menu Principal" no admin
+- Alinhamento dos itens (esquerda/centro/direita)
+- Gap configurável entre os itens
+- Padding configurável dos itens (top/bottom e left/right)
+
+### 0.2.4
+- Card separado para configurações mobile/tablet
+- Cor do ícone configurável (mobile)
+- Cor de fundo configurável (mobile)
+- Largura do menu mobile configurável (50-100%)
+- Ícone arrow-down-alt2 para submenus mobile
+
+### 0.2.3
+- Menu mobile/tablet com breakpoint em 1024px
+- Botão hamburger para abrir menu mobile
+- Menu mobile desliza da direita (slide)
+- Accordion mobile com animação de slide
+
+### 0.2.2
+- Dropdown full width com max-width configurável
+- Animação FadeIn/FadeOut ou SlideIn/SlideOut
+- Opção de sombra no dropdown
+- Cor de fundo do dropdown configurável
+
+### 0.1.2
+- Sistema de ícones com rotação de 180º
+
+### 0.1.1
+- Criação do módulo FAQ
+
+---
+
+## 10. Contato e Suporte
+
+- **Autor:** Rodrigo Bermudez
+- **Website:** https://patropicomunica.com.br
+- **Repositório GitHub:** https://github.com/rodsbermudez/plugin-patropi

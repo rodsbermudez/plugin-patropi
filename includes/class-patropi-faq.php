@@ -140,24 +140,7 @@ class Patropi_Addon_FAQ {
             return;
         }
 
-        $faq_posts = get_posts( array(
-            'post_type' => $this->post_type,
-            'post_status' => 'publish',
-            'posts_per_page' => -1,
-            'meta_key' => $this->meta_key,
-            'meta_compare' => 'EXISTS'
-        ) );
-
-        $page_ids = array();
-        foreach ( $faq_posts as $faq ) {
-            $pages = get_post_meta( $faq->ID, $this->meta_key, true );
-            if ( is_array( $pages ) && in_array( $post->ID, $pages ) ) {
-                $page_ids[] = $post->ID;
-                break;
-            }
-        }
-
-        if ( empty( $page_ids ) ) {
+        if ( ! has_shortcode( $post->post_content, 'faq-patropi' ) ) {
             return;
         }
 
@@ -178,7 +161,7 @@ class Patropi_Addon_FAQ {
             true
         );
 
-        $settings = new Patropi_Addon_Settings();
+        $settings = Patropi_Addon_Settings::get_instance();
         wp_localize_script( 'patropi-faq', 'patropiFaqSettings', array(
             'openFirst' => $settings->is_faq_open_first(),
             'closeOthers' => $settings->is_faq_close_others(),
@@ -189,7 +172,7 @@ class Patropi_Addon_FAQ {
     }
 
     public function render_shortcode( $atts ) {
-        $settings = new Patropi_Addon_Settings();
+        $settings = Patropi_Addon_Settings::get_instance();
 
         if ( ! $settings->is_faq_enabled() ) {
             return '';

@@ -3,9 +3,16 @@ Contributors: patropi
 Tags: patropi, addon, utilities
 Requires at least: 5.0
 Tested up to: 6.4
-Stable tag: 0.2.5
+Stable tag: 0.2.6
 
 == Changelog ==
+
+= 0.2.6 =
+* Geral: Leitura automatizada e dinâmica do changelog (README.txt) para a página de Atualizações
+* UI/UX: Modificada estrutura do admin para restaurar funcionamento do JavaScript (Toggles, FAQ, Mega Menu builder)
+* UI/UX: Adicionado botão "Salvar Configurações" extra acima dos itens do Mega Menu
+* UI/UX: Adicionado espaçamento visual (10px) entre os itens do menu de abas
+* Estabilidade: Adicionado redirecionamento de segurança (PRG pattern) após interações de salvar para resolver erro de "White Screen" e inconsistências no menu lateral
 
 = 0.2.5 =
 * Mega Menu: Card "Layout do Menu Principal" no admin
@@ -44,8 +51,7 @@ Stable tag: 0.2.5
 * Correção: Fundo aplicado apenas nos itens do menu (não no container)
 * Melhoria: Botões adicionar/remover colunas no builder
 
-= 0.2.1-dev =
-* [Em desenvolvimento]
+= 0.2.1 =
 * Novo módulo: Mega Menu
   - Shortcode [patropi-mega-menu] para exibir o menu
   - Interface gráfica no admin para criar o menu (builder)

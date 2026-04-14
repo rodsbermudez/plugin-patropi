@@ -4,7 +4,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class Patropi_Addon_Settings {
+    private static $instance = null;
     private $option_name = 'patropi_addon_settings';
+    
+    public static function get_instance() {
+        if ( null === self::$instance ) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+
+    private function __construct() {}
+
     private $defaults = array(
         'faq_enabled' => false,
         'faq_open_first' => false,
