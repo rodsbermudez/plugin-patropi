@@ -2,8 +2,8 @@
 /**
  * Plugin Name: Patropi Add-ons
  * Plugin URI: https://patropi.com.br
- * Description: Plugin utilitário com funcionalidades extras para WordPress
- * Version: 0.2.6
+ * Description: Módulo completo com construtor de Mega Menu e gerenciador CPT de FAQ com estrutura de categorias em abas e accordion, usando design system Bootstrap Flatly.
+ * Version: 0.2.7
  * Author: Rodrigo Bermudez
  * Author URI: https://patropicomunica.com.br
  * License: GPL v2 or later
@@ -16,7 +16,9 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-define( 'PATROPI_ADDON_VERSION', '0.2.6' );
+if ( ! defined( 'PATROPI_ADDON_VERSION' ) ) {
+    define( 'PATROPI_ADDON_VERSION', '0.2.7' );
+}
 define( 'PATROPI_ADDON_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'PATROPI_ADDON_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 

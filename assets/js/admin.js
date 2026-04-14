@@ -136,10 +136,21 @@
         // Add new menu item
         $('#patropi-add-menu-item').on('click', function() {
             var $container = $('#patropi-menu-items-container');
-            var count = $container.find('.patropi-menu-item').length;
+            var maxCount = -1;
+            $container.find('.patropi-menu-item').each(function() {
+                var idx = parseInt($(this).attr('data-index'), 10);
+                if (idx > maxCount) maxCount = idx;
+            });
+            var count = maxCount + 1;
             
             var html = '<div class="patropi-menu-item card mb-3" data-index="' + count + '">' +
-                '<div class="card-body">' +
+                '<div class="card-header patropi-accordion-header d-flex justify-content-between align-items-center" style="cursor: pointer; background-color: #f8f9fa;">' +
+                '<strong><span class="dashicons dashicons-menu" style="color: #ccc; margin-right: 8px;"></span> <span class="patropi-item-title-preview">Novo Item</span></strong>' +
+                '<div>' +
+                '<span class="dashicons dashicons-arrow-up-alt2 patropi-accordion-icon"></span>' +
+                '</div>' +
+                '</div>' +
+                '<div class="card-body patropi-accordion-body">' +
                 '<div class="row">' +
                 '<div class="col-md-6">' +
                 '<label><strong>Texto do item</strong></label>' +
@@ -147,11 +158,13 @@
                 '</div>' +
                 '<div class="col-md-6">' +
                 '<label><strong>Tem mega menu?</strong></label>' +
-                '<label class="patropi-toggle" style="margin-top: 5px;">' +
+                '<div class="d-flex align-items-center" style="height: 38px;">' +
+                '<label class="patropi-toggle mb-0" style="margin-top: 0;">' +
                 '<input type="checkbox" name="menu_items[' + count + '][has_mega]" value="1" class="patropi-has-mega-toggle">' +
                 '<span class="patropi-toggle-switch"></span>' +
                 '<span class="patropi-toggle-label">Ativar mega menu</span>' +
                 '</label>' +
+                '</div>' +
                 '</div>' +
                 '</div>' +
                 '<div class="patropi-mega-config" style="display: none;">' +
@@ -161,11 +174,11 @@
                 '</div>' +
                 '<div class="patropi-columns-container">' +
                 '<div class="patropi-column card mb-2" data-col-index="0">' +
-                '<div class="card-header d-flex justify-content-between align-items-center">' +
-                '<span>Coluna 1</span>' +
-                '<button type="button" class="btn btn-danger btn-sm patropi-remove-column">Remover</button>' +
+                '<div class="card-header patropi-accordion-header d-flex justify-content-between align-items-center" style="cursor: pointer;">' +
+                '<span><strong>Coluna 1</strong> <span class="dashicons dashicons-arrow-down-alt2 patropi-accordion-icon" style="margin-left: 8px;"></span></span>' +
+                '<button type="button" class="btn btn-danger btn-sm patropi-remove-column" style="position: relative; z-index: 2;">Remover</button>' +
                 '</div>' +
-                '<div class="card-body">' +
+                '<div class="card-body patropi-accordion-body" style="display: none;">' +
                 '<div class="row">' +
                 '<div class="col-4 col-md-4">' +
                 '<label><strong>Largura (%)</strong></label>' +
@@ -173,11 +186,13 @@
                 '</div>' +
                 '<div class="col-4 col-md-4">' +
                 '<label><strong>Tem título?</strong></label>' +
-                '<label class="patropi-toggle" style="margin-top: 5px;">' +
+                '<div class="d-flex align-items-center" style="height: 38px;">' +
+                '<label class="patropi-toggle mb-0" style="margin-top: 0;">' +
                 '<input type="checkbox" name="menu_items[' + count + '][columns][0][has_title]" value="1" class="patropi-has-title-toggle">' +
                 '<span class="patropi-toggle-switch"></span>' +
                 '<span class="patropi-toggle-label">Mostrar</span>' +
                 '</label>' +
+                '</div>' +
                 '</div>' +
                 '<div class="col-4 col-md-4">' +
                 '<label><strong>Layout</strong></label>' +
@@ -303,7 +318,18 @@
         // Add link to column
         $(document).on('click', '.patropi-add-link', function() {
             var $list = $(this).prev('.patropi-links-list');
-            var count = $list.find('.patropi-link-item').length;
+            var maxLinkCount = -1;
+            $list.find('.patropi-link-item').each(function() {
+                var nameAttr = $(this).find('.patropi-link-type').attr('name');
+                if (nameAttr) {
+                    var match = nameAttr.match(/\[links\]\[(\d+)\]/);
+                    if (match && match[1]) {
+                        var idx = parseInt(match[1], 10);
+                        if (idx > maxLinkCount) maxLinkCount = idx;
+                    }
+                }
+            });
+            var count = maxLinkCount + 1;
             
             if (count >= 10) {
                 alert('Máximo de 10 links por coluna.');
@@ -355,7 +381,13 @@
             var $columnsContainer = $container.find('.patropi-columns-container');
             var itemIndex = $container.closest('.patropi-menu-item').data('index');
             console.log('itemIndex:', itemIndex);
-            var colCount = $columnsContainer.find('.patropi-column').length;
+            
+            var maxColCount = -1;
+            $columnsContainer.find('.patropi-column').each(function() {
+                var idx = parseInt($(this).attr('data-col-index'), 10);
+                if (idx > maxColCount) maxColCount = idx;
+            });
+            var colCount = maxColCount + 1;
             console.log('colCount:', colCount);
             
             if (colCount >= 6) {
@@ -367,11 +399,11 @@
             var pagesHtml = $pagesDropdown.length ? $pagesDropdown.html() : '<option value="">Selecione uma página</option>';
 
             var colHtml = '<div class="patropi-column card mb-2" data-col-index="' + colCount + '">' +
-                '<div class="card-header d-flex justify-content-between align-items-center">' +
-                '<span>Coluna ' + (colCount + 1) + '</span>' +
-                '<button type="button" class="btn btn-danger btn-sm patropi-remove-column">Remover</button>' +
+                '<div class="card-header patropi-accordion-header d-flex justify-content-between align-items-center" style="cursor: pointer;">' +
+                '<span><strong>Coluna ' + (colCount + 1) + '</strong> <span class="dashicons dashicons-arrow-up-alt2 patropi-accordion-icon" style="margin-left: 8px;"></span></span>' +
+                '<button type="button" class="btn btn-danger btn-sm patropi-remove-column" style="position: relative; z-index: 2;">Remover</button>' +
                 '</div>' +
-                '<div class="card-body">' +
+                '<div class="card-body patropi-accordion-body">' +
                 '<div class="row">' +
                 '<div class="col-4 col-md-4">' +
                 '<label><strong>Largura (%)</strong></label>' +
@@ -379,11 +411,13 @@
                 '</div>' +
                 '<div class="col-4 col-md-4">' +
                 '<label><strong>Tem título?</strong></label>' +
-                '<label class="patropi-toggle" style="margin-top: 5px;">' +
+                '<div class="d-flex align-items-center" style="height: 38px;">' +
+                '<label class="patropi-toggle mb-0" style="margin-top: 0;">' +
                 '<input type="checkbox" name="menu_items[' + itemIndex + '][columns][' + colCount + '][has_title]" value="1" class="patropi-has-title-toggle">' +
                 '<span class="patropi-toggle-switch"></span>' +
                 '<span class="patropi-toggle-label">Mostrar</span>' +
                 '</label>' +
+                '</div>' +
                 '</div>' +
                 '<div class="col-4 col-md-4">' +
                 '<label><strong>Layout</strong></label>' +
@@ -470,6 +504,30 @@
             } else {
                 alert('Mínimo de 1 coluna permitidos.');
             }
+        });
+        
+
+        // Accordion functionality for Mega Menu Items and Columns
+        $(document).on('click', '.patropi-accordion-header', function(e) {
+            // Prevent toggling if clicked on a button or an input inside header
+            if ($(e.target).is('button') || $(e.target).closest('button').length > 0 || $(e.target).is('input')) {
+                return;
+            }
+            var $body = $(this).next('.patropi-accordion-body');
+            var $icon = $(this).find('.patropi-accordion-icon');
+            
+            $body.slideToggle(200);
+            if ($icon.hasClass('dashicons-arrow-down-alt2')) {
+                $icon.removeClass('dashicons-arrow-down-alt2').addClass('dashicons-arrow-up-alt2');
+            } else {
+                $icon.removeClass('dashicons-arrow-up-alt2').addClass('dashicons-arrow-down-alt2');
+            }
+        });
+
+        // Real-time title update for accordion headers
+        $(document).on('input', '.patropi-menu-item > .patropi-accordion-body input[name$="[text]"]', function() {
+            var val = $(this).val();
+            $(this).closest('.patropi-menu-item').find('.patropi-item-title-preview').text(val ? 'Item: ' + val : 'Novo Item');
         });
     });
 })(jQuery);

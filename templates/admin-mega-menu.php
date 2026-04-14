@@ -172,9 +172,9 @@ if ( ! defined( 'ABSPATH' ) ) {
                 </div>
                 <div class="col-6 col-md-3">
                     <label><strong><?php _e( 'Cor de fundo', 'patropi-addon' ); ?></strong></label>
-                    <div class="d-flex align-items-center gap-2">
-                        <input type="color" name="mega_menu[dropdown_bg]" value="<?php echo esc_attr( $settings['mega_menu']['dropdown_bg'] ?? '#ffffff' ); ?>" class="form-control form-control-color" style="width: 50px; height: 40px; padding: 2px;">
-                        <label class="patropi-toggle" style="margin-top: 0;">
+                    <div class="d-flex align-items-center gap-2" style="height: 38px;">
+                        <input type="color" name="mega_menu[dropdown_bg]" value="<?php echo esc_attr( $settings['mega_menu']['dropdown_bg'] ?? '#ffffff' ); ?>" class="form-control form-control-color" style="width: 50px; height: 38px; padding: 2px; margin: 0;">
+                        <label class="patropi-toggle mb-0" style="margin-top: 0;">
                             <input type="checkbox" name="mega_menu[dropdown_bg_transparent]" value="1" <?php checked( ! empty( $settings['mega_menu']['dropdown_bg_transparent'] ) ); ?>>
                             <span class="patropi-toggle-switch"></span>
                             <span class="patropi-toggle-label">Transparente</span>
@@ -219,7 +219,16 @@ if ( ! defined( 'ABSPATH' ) ) {
                 foreach ( $menu_items as $item ) : 
                 ?>
                     <div class="patropi-menu-item card mb-3" data-index="<?php echo $item_index; ?>">
-                        <div class="card-body">
+                        <div class="card-header patropi-accordion-header d-flex justify-content-between align-items-center" style="cursor: pointer; background-color: #f8f9fa;">
+                            <strong>
+                                <span class="dashicons dashicons-menu" style="color: #ccc; margin-right: 8px;"></span> 
+                                <span class="patropi-item-title-preview"><?php echo esc_html( ! empty($item['text']) ? 'Item: ' . $item['text'] : 'Item ' . ($item_index + 1) ); ?></span>
+                            </strong>
+                            <div>
+                                <span class="dashicons dashicons-arrow-down-alt2 patropi-accordion-icon"></span>
+                            </div>
+                        </div>
+                        <div class="card-body patropi-accordion-body" style="display: none;">
                             <div class="row">
                                 <div class="col-12 col-md-6">
                                     <label><strong><?php _e( 'Texto do item', 'patropi-addon' ); ?></strong></label>
@@ -227,11 +236,13 @@ if ( ! defined( 'ABSPATH' ) ) {
                                 </div>
                                 <div class="col-12 col-md-6">
                                     <label><strong><?php _e( 'Tem mega menu?', 'patropi-addon' ); ?></strong></label>
-                                    <label class="patropi-toggle" style="margin-top: 5px;">
-                                        <input type="checkbox" name="menu_items[<?php echo $item_index; ?>][has_mega]" value="1" <?php checked( $item['has_mega'] ?? false, true ); ?> class="patropi-has-mega-toggle">
-                                        <span class="patropi-toggle-switch"></span>
-                                        <span class="patropi-toggle-label"><?php _e( 'Ativar mega menu', 'patropi-addon' ); ?></span>
-                                    </label>
+                                    <div class="d-flex align-items-center" style="height: 38px;">
+                                        <label class="patropi-toggle mb-0" style="margin-top: 0;">
+                                            <input type="checkbox" name="menu_items[<?php echo $item_index; ?>][has_mega]" value="1" <?php checked( $item['has_mega'] ?? false, true ); ?> class="patropi-has-mega-toggle">
+                                            <span class="patropi-toggle-switch"></span>
+                                            <span class="patropi-toggle-label"><?php _e( 'Ativar mega menu', 'patropi-addon' ); ?></span>
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
 
@@ -255,11 +266,11 @@ if ( ! defined( 'ABSPATH' ) ) {
                                     foreach ( $columns as $col ) : 
                                     ?>
                                         <div class="patropi-column card mb-2" data-col-index="<?php echo $col_index; ?>">
-                                            <div class="card-header d-flex justify-content-between align-items-center">
-                                                <span><?php _e( 'Coluna', 'patropi-addon' ); ?> <?php echo $col_index + 1; ?></span>
-                                                <button type="button" class="btn btn-danger btn-sm patropi-remove-column"><?php _e( 'Remover', 'patropi-addon' ); ?></button>
+                                            <div class="card-header patropi-accordion-header d-flex justify-content-between align-items-center" style="cursor: pointer;">
+                                                <span><strong><?php _e( 'Coluna', 'patropi-addon' ); ?> <?php echo $col_index + 1; ?></strong> <span class="dashicons dashicons-arrow-down-alt2 patropi-accordion-icon" style="margin-left: 8px;"></span></span>
+                                                <button type="button" class="btn btn-danger btn-sm patropi-remove-column" style="position: relative; z-index: 2;"><?php _e( 'Remover', 'patropi-addon' ); ?></button>
                                             </div>
-                                            <div class="card-body">
+                                            <div class="card-body patropi-accordion-body" style="display: none;">
                                                 <div class="row">
                                                     <div class="col-4 col-md-4">
                                                         <label><strong><?php _e( 'Largura (%)', 'patropi-addon' ); ?></strong></label>
@@ -267,11 +278,13 @@ if ( ! defined( 'ABSPATH' ) ) {
                                                     </div>
                                                     <div class="col-4 col-md-4">
                                                         <label><strong><?php _e( 'Tem título?', 'patropi-addon' ); ?></strong></label>
-                                                        <label class="patropi-toggle" style="margin-top: 5px;">
-                                                            <input type="checkbox" name="menu_items[<?php echo $item_index; ?>][columns][<?php echo $col_index; ?>][has_title]" value="1" <?php checked( $col['has_title'] ?? false, true ); ?> class="patropi-has-title-toggle">
-                                                            <span class="patropi-toggle-switch"></span>
-                                                            <span class="patropi-toggle-label"><?php _e( 'Mostrar', 'patropi-addon' ); ?></span>
-                                                        </label>
+                                                        <div class="d-flex align-items-center" style="height: 38px;">
+                                                            <label class="patropi-toggle mb-0" style="margin-top: 0;">
+                                                                <input type="checkbox" name="menu_items[<?php echo $item_index; ?>][columns][<?php echo $col_index; ?>][has_title]" value="1" <?php checked( $col['has_title'] ?? false, true ); ?> class="patropi-has-title-toggle">
+                                                                <span class="patropi-toggle-switch"></span>
+                                                                <span class="patropi-toggle-label"><?php _e( 'Mostrar', 'patropi-addon' ); ?></span>
+                                                            </label>
+                                                        </div>
                                                     </div>
                                                     <div class="col-4 col-md-4">
                                                         <label><strong><?php _e( 'Layout', 'patropi-addon' ); ?></strong></label>

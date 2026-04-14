@@ -220,7 +220,9 @@ class Patropi_Addon_Admin {
                     position: relative;
                     display: inline-flex;
                     align-items: center;
+                    gap: 8px; /* Espacamento entre switch e texto */
                     cursor: pointer;
+                    margin-top: 5px; /* Alinhamento uniforme por padrao */
                 }
                 .patropi-toggle input {
                     opacity: 0;
@@ -235,7 +237,7 @@ class Patropi_Addon_Admin {
                     background-color: #ccc;
                     border-radius: 24px;
                     transition: .4s;
-                    margin-right: 10px;
+                    flex-shrink: 0; /* Evita achatamento do switch */
                 }
                 .patropi-toggle-switch:before {
                     position: absolute;

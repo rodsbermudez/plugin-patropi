@@ -3,9 +3,13 @@ Contributors: patropi
 Tags: patropi, addon, utilities
 Requires at least: 5.0
 Tested up to: 6.4
-Stable tag: 0.2.6
+Stable tag: 0.2.7
 
 == Changelog ==
+
+= 0.2.7 =
+* **Bug Fix (Mega Menu):** Corrigido bug crítico de indexação ao adicionar e excluir colunas, links e itens que causava sobrescrita de dados durante o salvamento.
+* **Melhoria UI/UX:** Aprimorado alinhamento vertical dos botões de Toggle e labels laterais para melhor fluidez visual na área do Mega Menu (distanciamento e enfileiramento vertical consistente nas opções "Tem Mega Menu", "Mostrar Título" e "Transparente").
 
 = 0.2.6 =
 * Geral: Leitura automatizada e dinâmica do changelog (README.txt) para a página de Atualizações
